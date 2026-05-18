@@ -673,116 +673,141 @@
     .ov-hero { grid-template-columns: 1.2fr 1fr; gap: 64px; }
   }
 
-  /* ---------- Agent preview (hero right column) ---------- */
-  .agent-preview {
-    display: grid;
-    gap: 12px;
-    align-self: center;
+  /* ---------- Agent explorer (hero right column) ---------- */
+  .agent-explorer {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
     width: 100%;
+    align-self: center;
   }
-  .agent-card {
-    background: #FFFFFF;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 16px 20px;
-    box-shadow: 0 1px 3px rgba(0,0,0,.04);
-    opacity: 0;
-    transform: translateY(20px);
-    animation: agentCardIn .6s cubic-bezier(0.25, 0.46, 0.45, 0.94) var(--card-delay, 0s) forwards;
-    transition: transform .2s ease, box-shadow .2s ease;
+  .agent-item {
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+    cursor: pointer;
+    transition: opacity .4s ease;
+    opacity: 0.35;
+    position: relative;
+    outline: none;
   }
-  .agent-card:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0,0,0,.06);
-  }
-  @keyframes agentCardIn {
-    to { opacity: 1; transform: translateY(0); }
+  .agent-item.is-active { opacity: 1; }
+  .agent-item:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 4px;
+    border-radius: 8px;
   }
 
-  .agent-row {
-    display: flex; align-items: center; gap: 14px;
-    margin-bottom: 12px;
+  .agent-track {
+    width: 3px;
+    background: var(--line);
+    border-radius: 999px;
+    position: relative;
+    flex-shrink: 0;
+    align-self: stretch;
+  }
+  .agent-bar-fill {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 0%;
+    border-radius: 999px;
+    background: var(--agent-color);
+  }
+  .agent-item.is-running .agent-bar-fill {
+    animation: agent-fill-bar 5s linear forwards;
+  }
+  @keyframes agent-fill-bar {
+    from { height: 0%; }
+    to   { height: 100%; }
+  }
+
+  .agent-content { flex: 1; min-width: 0; }
+  .agent-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
   }
   .agent-avatar {
-    width: 64px; height: 64px;
+    width: 56px; height: 56px;
     border-radius: 50%;
     overflow: hidden;
     flex-shrink: 0;
-    position: relative;
-    display: flex; align-items: center; justify-content: center;
-    background: var(--agent-color, var(--ink));
-    color: #fff;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 700;
-    font-size: 26px;
-    letter-spacing: -0.02em;
-  }
-  .agent-avatar img {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
     object-fit: cover;
+    background: var(--bg-3);
     display: block;
   }
-  .agent-info { min-width: 0; flex: 1; }
   .agent-name {
-    font-size: 17px; font-weight: 600;
-    letter-spacing: -0.015em;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
     color: var(--ink);
     line-height: 1.2;
+    letter-spacing: -0.02em;
   }
   .agent-role {
-    font-size: 13px; color: var(--ink-2);
-    margin-top: 2px;
     font-family: 'DM Mono', monospace;
-    letter-spacing: .02em;
-  }
-
-  .agent-progress {
-    height: 4px;
-    background: #F3F4F6;
-    border-radius: 999px;
-    overflow: hidden;
-    margin-bottom: 10px;
-  }
-  .agent-progress-fill {
-    height: 100%;
-    width: 0;
-    background: var(--agent-color, var(--ink));
-    border-radius: 999px;
-    animation: agentFill 1.2s ease-out var(--bar-delay, .8s) forwards;
-  }
-  @keyframes agentFill {
-    to { width: var(--bar-width, 70%); }
-  }
-
-  .agent-desc {
-    font-size: 13.5px;
+    font-size: 13px;
     color: var(--ink-2);
-    line-height: 1.5;
+    letter-spacing: .02em;
+    margin-top: 2px;
+  }
+
+  .agent-details {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    margin-top: 0;
+    transition: max-height .4s ease, opacity .3s ease, margin .3s ease;
+  }
+  .agent-item.is-active .agent-details {
+    max-height: 260px;
+    opacity: 1;
+    margin-top: 16px;
+  }
+  .agent-desc {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    margin: 0 0 12px 0;
   }
   .agent-tags {
-    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
     font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: .08em;
-    color: var(--ink-3);
-    text-transform: uppercase;
-  }
-  .agent-tags b {
-    color: var(--agent-color, var(--ink-2));
+    font-size: 12px;
     font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--agent-color);
+  }
+  .agent-tags span:nth-child(even) {
+    color: #D1D5DB;
   }
 
   @media (max-width: 768px) {
-    .agent-avatar { width: 48px; height: 48px; font-size: 20px; }
-    .agent-card { padding: 14px 16px; }
+    .agent-avatar { width: 48px; height: 48px; }
+    .agent-name { font-size: 18px; }
+    .agent-item { padding: 16px 0; gap: 16px; }
   }
   @media (max-width: 640px) {
-    .agent-avatar { width: 40px; height: 40px; font-size: 17px; }
-    .agent-row { gap: 12px; margin-bottom: 10px; }
-    .agent-name { font-size: 16px; }
-    .agent-role { font-size: 12px; }
-    .agent-desc { font-size: 13px; }
+    .agent-avatar { width: 44px; height: 44px; }
+    .agent-name { font-size: 17px; }
+    .agent-item { padding: 14px 0; gap: 14px; }
+    .agent-desc { font-size: 14px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .agent-item { opacity: 1; cursor: default; }
+    .agent-details {
+      max-height: 260px;
+      opacity: 1;
+      margin-top: 16px;
+    }
+    .agent-bar-fill { display: none; }
   }
   .ov-eyebrow {
     font-family: 'DM Mono', monospace;
@@ -1086,55 +1111,72 @@
         <p class="ov-lede">Este playbook vai te apresentar os três agentes e depois te guiar passo a passo na configuração. Sem pressa, sem técnico, sem código — só você, seu celular e seus doces.</p>
       </div>
 
-      <aside class="agent-preview" aria-label="Conheça seus 3 agentes">
-        <article class="agent-card" style="--agent-color:#E91E8C; --card-delay:.3s; --bar-delay:.8s; --bar-width:85%;">
-          <div class="agent-row">
-            <div class="agent-avatar" aria-hidden="true">
-              <span class="agent-initial">M</span>
-              <img src="./imgs/maky.png" alt="" onerror="this.remove()">
-            </div>
-            <div class="agent-info">
-              <div class="agent-name">Maky</div>
-              <div class="agent-role">Marketing &amp; conteúdo</div>
-            </div>
-          </div>
-          <div class="agent-progress" aria-hidden="true"><div class="agent-progress-fill"></div></div>
-          <p class="agent-desc">Cria posts pro Instagram com seus produtos, responde comentários e DMs, e reativa clientes que sumiram — tudo com sua aprovação.</p>
-          <div class="agent-tags"><b>Posts</b> · <b>Comentários</b> · <b>Reativação</b></div>
-        </article>
+      <div class="agent-explorer" role="tablist" aria-label="Agentes do Squad">
 
-        <article class="agent-card" style="--agent-color:#2DB67D; --card-delay:.5s; --bar-delay:1s; --bar-width:70%;">
-          <div class="agent-row">
-            <div class="agent-avatar" aria-hidden="true">
-              <span class="agent-initial">W</span>
-              <img src="./imgs/waz.png" alt="" onerror="this.remove()">
+        <div class="agent-item is-active is-running" role="tab" aria-selected="true" tabindex="0" style="--agent-color:#E91E8C;">
+          <div class="agent-track"><div class="agent-bar-fill"></div></div>
+          <div class="agent-content">
+            <div class="agent-header">
+              <img class="agent-avatar" src="./imgs/maky.png" alt="Maky" />
+              <div>
+                <div class="agent-name">Maky</div>
+                <div class="agent-role">Marketing &amp; conteúdo</div>
+              </div>
             </div>
-            <div class="agent-info">
-              <div class="agent-name">Waz</div>
-              <div class="agent-role">Atendimento 24h</div>
+            <div class="agent-details">
+              <p class="agent-desc">Cria posts pro Instagram com seus produtos, responde comentários e DMs, e reativa clientes que sumiram — tudo com sua aprovação.</p>
+              <div class="agent-tags">
+                <span>Posts</span><span>·</span>
+                <span>Comentários</span><span>·</span>
+                <span>Reativação</span>
+              </div>
             </div>
           </div>
-          <div class="agent-progress" aria-hidden="true"><div class="agent-progress-fill"></div></div>
-          <p class="agent-desc">Atende no WhatsApp e Instagram com seu cardápio sempre atualizado, faz follow-up de quem não fechou, e te chama quando precisa de decisão humana.</p>
-          <div class="agent-tags"><b>Atendimento 24h</b> · <b>Follow-up</b> · <b>Agendamentos</b></div>
-        </article>
+        </div>
 
-        <article class="agent-card" style="--agent-color:#2563EB; --card-delay:.7s; --bar-delay:1.2s; --bar-width:60%;">
-          <div class="agent-row">
-            <div class="agent-avatar" aria-hidden="true">
-              <span class="agent-initial">F</span>
-              <img src="./imgs/fin.png" alt="" onerror="this.remove()">
+        <div class="agent-item" role="tab" aria-selected="false" tabindex="0" style="--agent-color:#2DB67D;">
+          <div class="agent-track"><div class="agent-bar-fill"></div></div>
+          <div class="agent-content">
+            <div class="agent-header">
+              <img class="agent-avatar" src="./imgs/waz.png" alt="Waz" />
+              <div>
+                <div class="agent-name">Waz</div>
+                <div class="agent-role">Atendimento 24h</div>
+              </div>
             </div>
-            <div class="agent-info">
-              <div class="agent-name">Fin</div>
-              <div class="agent-role">Financeiro &amp; cobranças</div>
+            <div class="agent-details">
+              <p class="agent-desc">Atende no WhatsApp e Instagram com seu cardápio sempre atualizado, faz follow-up de quem não fechou, e te chama quando precisa de decisão humana.</p>
+              <div class="agent-tags">
+                <span>Atendimento 24h</span><span>·</span>
+                <span>Follow-up</span><span>·</span>
+                <span>Agendamentos</span>
+              </div>
             </div>
           </div>
-          <div class="agent-progress" aria-hidden="true"><div class="agent-progress-fill"></div></div>
-          <p class="agent-desc">Manda links de Pix e cartão direto no chat, cobra quem não pagou, escaneia recibos com a câmera e mostra o lucro real do negócio.</p>
-          <div class="agent-tags"><b>Pagamentos</b> · <b>Cobranças</b> · <b>Fluxo de caixa</b></div>
-        </article>
-      </aside>
+        </div>
+
+        <div class="agent-item" role="tab" aria-selected="false" tabindex="0" style="--agent-color:#2563EB;">
+          <div class="agent-track"><div class="agent-bar-fill"></div></div>
+          <div class="agent-content">
+            <div class="agent-header">
+              <img class="agent-avatar" src="./imgs/fin.png" alt="Fin" />
+              <div>
+                <div class="agent-name">Fin</div>
+                <div class="agent-role">Financeiro &amp; cobranças</div>
+              </div>
+            </div>
+            <div class="agent-details">
+              <p class="agent-desc">Manda links de Pix e cartão direto no chat, cobra quem não pagou, escaneia recibos com a câmera e mostra o lucro real do negócio.</p>
+              <div class="agent-tags">
+                <span>Pagamentos</span><span>·</span>
+                <span>Cobranças</span><span>·</span>
+                <span>Fluxo de caixa</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </section>
 
 
@@ -1830,6 +1872,66 @@
       window.scrollTo({ top, behavior: 'smooth' });
     });
   });
+
+  // ============ Agent explorer (rotating spotlight) ============
+  const explorer = document.querySelector('.agent-explorer');
+  if (explorer) {
+    const items = Array.from(explorer.querySelectorAll('.agent-item'));
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let activeIndex = 0;
+    let inView = false;
+
+    const setActive = (idx) => {
+      activeIndex = idx;
+      items.forEach((it, i) => {
+        const active = i === idx;
+        it.classList.toggle('is-active', active);
+        it.classList.remove('is-running');
+        it.setAttribute('aria-selected', String(active));
+      });
+      if (inView && !reducedMotion) {
+        void items[idx].offsetWidth; // reflow to restart bar animation
+        items[idx].classList.add('is-running');
+      }
+    };
+
+    items.forEach((item, idx) => {
+      const fill = item.querySelector('.agent-bar-fill');
+      if (fill) {
+        fill.addEventListener('animationend', () => {
+          if (idx === activeIndex && inView && !reducedMotion) {
+            setActive((activeIndex + 1) % items.length);
+          }
+        });
+      }
+      const activate = () => {
+        if (idx !== activeIndex) setActive(idx);
+        else if (inView && !reducedMotion) {
+          item.classList.remove('is-running');
+          void item.offsetWidth;
+          item.classList.add('is-running');
+        }
+      };
+      item.addEventListener('mouseenter', activate);
+      item.addEventListener('click', activate);
+      item.addEventListener('focus', activate);
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); }
+      });
+    });
+
+    const explorerIO = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        inView = e.isIntersecting;
+        if (inView) {
+          setActive(activeIndex);
+        } else {
+          items.forEach(i => i.classList.remove('is-running'));
+        }
+      });
+    }, { threshold: 0.2 });
+    explorerIO.observe(explorer);
+  }
 </script>
 
 </body>
