@@ -666,11 +666,123 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 36px;
-    align-items: end;
+    align-items: center;
     margin-bottom: clamp(56px, 9vw, 96px);
   }
   @media (min-width: 900px) {
-    .ov-hero { grid-template-columns: 1.4fr 1fr; gap: 64px; }
+    .ov-hero { grid-template-columns: 1.2fr 1fr; gap: 64px; }
+  }
+
+  /* ---------- Agent preview (hero right column) ---------- */
+  .agent-preview {
+    display: grid;
+    gap: 12px;
+    align-self: center;
+    width: 100%;
+  }
+  .agent-card {
+    background: #FFFFFF;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: agentCardIn .6s cubic-bezier(0.25, 0.46, 0.45, 0.94) var(--card-delay, 0s) forwards;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .agent-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,.06);
+  }
+  @keyframes agentCardIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .agent-row {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 12px;
+  }
+  .agent-avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--agent-color, var(--ink));
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: -0.02em;
+  }
+  .agent-avatar img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .agent-info { min-width: 0; flex: 1; }
+  .agent-name {
+    font-size: 17px; font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .agent-role {
+    font-size: 13px; color: var(--ink-2);
+    margin-top: 2px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: .02em;
+  }
+
+  .agent-progress {
+    height: 4px;
+    background: #F3F4F6;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .agent-progress-fill {
+    height: 100%;
+    width: 0;
+    background: var(--agent-color, var(--ink));
+    border-radius: 999px;
+    animation: agentFill 1.2s ease-out var(--bar-delay, .8s) forwards;
+  }
+  @keyframes agentFill {
+    to { width: var(--bar-width, 70%); }
+  }
+
+  .agent-desc {
+    font-size: 13.5px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+  .agent-tags {
+    margin-top: 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .08em;
+    color: var(--ink-3);
+    text-transform: uppercase;
+  }
+  .agent-tags b {
+    color: var(--agent-color, var(--ink-2));
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .agent-avatar { width: 48px; height: 48px; font-size: 20px; }
+    .agent-card { padding: 14px 16px; }
+  }
+  @media (max-width: 640px) {
+    .agent-avatar { width: 40px; height: 40px; font-size: 17px; }
+    .agent-row { gap: 12px; margin-bottom: 10px; }
+    .agent-name { font-size: 16px; }
+    .agent-role { font-size: 12px; }
+    .agent-desc { font-size: 13px; }
   }
   .ov-eyebrow {
     font-family: 'DM Mono', monospace;
@@ -702,9 +814,7 @@
     color: var(--ink-2);
     max-width: 56ch;
   }
-  .ov-stats {
-    display: flex; flex-wrap: wrap; gap: 24px 32px;
-  }
+  
   .ov-stat { display: flex; flex-direction: column; gap: 4px; }
   .ov-stat .num {
     font-size: clamp(28px, 3.4vw, 38px); font-weight: 700; letter-spacing: -0.025em;
@@ -975,88 +1085,58 @@
         <h1 class="ov-title">Seu time de IA pra confeitaria, <span class="accent-stripe">em 3 agentes.</span></h1>
         <p class="ov-lede">Este playbook vai te apresentar os três agentes e depois te guiar passo a passo na configuração. Sem pressa, sem técnico, sem código — só você, seu celular e seus doces.</p>
       </div>
-      <div class="ov-stats">
-        <div class="ov-stat"><span class="num">3</span><span class="lbl">Agentes de IA</span></div>
-        <div class="ov-stat"><span class="num">4</span><span class="lbl">Etapas de setup</span></div>
-        <div class="ov-stat"><span class="num">~35min</span><span class="lbl">Pra configurar</span></div>
-      </div>
-    </section>
 
-    <!-- AGENTES (dinâmico, tabs) -->
-    <section class="ov-agents">
-      <div class="ov-section-head">
-        <div>
-          <div class="ov-eyebrow">Conheça seu time</div>
-          <h2>Seus 3 agentes.</h2>
-        </div>
-        <p>Clique em cada agente pra ver o que ele faz. Você pode ativar todos ou começar só com um.</p>
-      </div>
-
-      <div class="ov-tabs" role="tablist" aria-label="Selecionar agente">
-        <button class="ov-tab active" data-agent="waz" role="tab" aria-selected="true"><span class="ov-tab-dot"></span>Waz · Atendimento</button>
-        <button class="ov-tab" data-agent="maky" role="tab" aria-selected="false"><span class="ov-tab-dot"></span>Maky · Marketing</button>
-        <button class="ov-tab" data-agent="fin" role="tab" aria-selected="false"><span class="ov-tab-dot"></span>Fin · Financeiro</button>
-      </div>
-
-      <div class="ov-stage" id="ov-stage">
-        <div class="ov-stage-inner">
-          <div>
-            <!-- WAZ -->
-            <div class="ov-card active" data-card="waz">
-              <div class="ov-card-head">
-                <span class="ov-card-num">02 · agente</span>
-                <span class="ov-card-role">Atendimento 24h</span>
-              </div>
-              <div class="ov-card-name">Waz</div>
-              <p class="ov-card-desc">Responde suas clientes no WhatsApp e no Instagram com o cardápio atualizado, tira dúvidas sobre encomendas, faz follow-up de quem não fechou, e te avisa quando não sabe responder algo.</p>
-              <ul class="ov-features">
-                <li>Atendimento 24h no WhatsApp e Instagram</li>
-                <li>Responde dúvidas com base no seu cardápio</li>
-                <li>Follow-ups inteligentes com quem não fechou</li>
-                <li>Controle de agendamentos</li>
-                <li>Escala pra você quando precisa</li>
-              </ul>
+      <aside class="agent-preview" aria-label="Conheça seus 3 agentes">
+        <article class="agent-card" style="--agent-color:#E91E8C; --card-delay:.3s; --bar-delay:.8s; --bar-width:85%;">
+          <div class="agent-row">
+            <div class="agent-avatar" aria-hidden="true">
+              <span class="agent-initial">M</span>
+              <img src="./imgs/maky.png" alt="" onerror="this.remove()">
             </div>
-            <!-- MAKY -->
-            <div class="ov-card" data-card="maky">
-              <div class="ov-card-head">
-                <span class="ov-card-num">01 · agente</span>
-                <span class="ov-card-role">Marketing &amp; conteúdo</span>
-              </div>
-              <div class="ov-card-name">Maky</div>
-              <p class="ov-card-desc">Cria posts prontos pro Instagram com fotos dos seus doces, responde comentários automaticamente, e manda mensagens no WhatsApp pra quem sumiu — trazendo clientes de volta pra comprar de novo.</p>
-              <ul class="ov-features">
-                <li>Criação de campanhas e posts pro Instagram</li>
-                <li>Publicação automática (com sua aprovação)</li>
-                <li>Responde comentários</li>
-                <li>Reativação de clientes que sumiram</li>
-                <li>Coleta de avaliações</li>
-              </ul>
-            </div>
-            <!-- FIN -->
-            <div class="ov-card" data-card="fin">
-              <div class="ov-card-head">
-                <span class="ov-card-num">03 · agente</span>
-                <span class="ov-card-role">Financeiro &amp; cobrança</span>
-              </div>
-              <div class="ov-card-name">Fin</div>
-              <p class="ov-card-desc">Manda link de pagamento por Pix ou cartão direto no WhatsApp, acompanha quem ainda não pagou, escaneia recibos dos fornecedores, e te mostra se o negócio tá dando lucro de verdade.</p>
-              <ul class="ov-features">
-                <li>Links de pagamento por Pix e cartão</li>
-                <li>Fluxo de caixa atualizado</li>
-                <li>Escaneia recibos com a câmera</li>
-                <li>Lembrete de contas a pagar</li>
-                <li>Cobra automaticamente quem não pagou</li>
-              </ul>
+            <div class="agent-info">
+              <div class="agent-name">Maky</div>
+              <div class="agent-role">Marketing &amp; conteúdo</div>
             </div>
           </div>
+          <div class="agent-progress" aria-hidden="true"><div class="agent-progress-fill"></div></div>
+          <p class="agent-desc">Cria posts pro Instagram com seus produtos, responde comentários e DMs, e reativa clientes que sumiram — tudo com sua aprovação.</p>
+          <div class="agent-tags"><b>Posts</b> · <b>Comentários</b> · <b>Reativação</b></div>
+        </article>
 
-          <div class="ov-card-visual" aria-hidden="true">
-            <span class="glyph" id="ov-glyph">W</span>
+        <article class="agent-card" style="--agent-color:#2DB67D; --card-delay:.5s; --bar-delay:1s; --bar-width:70%;">
+          <div class="agent-row">
+            <div class="agent-avatar" aria-hidden="true">
+              <span class="agent-initial">W</span>
+              <img src="./imgs/waz.png" alt="" onerror="this.remove()">
+            </div>
+            <div class="agent-info">
+              <div class="agent-name">Waz</div>
+              <div class="agent-role">Atendimento 24h</div>
+            </div>
           </div>
-        </div>
-      </div>
+          <div class="agent-progress" aria-hidden="true"><div class="agent-progress-fill"></div></div>
+          <p class="agent-desc">Atende no WhatsApp e Instagram com seu cardápio sempre atualizado, faz follow-up de quem não fechou, e te chama quando precisa de decisão humana.</p>
+          <div class="agent-tags"><b>Atendimento 24h</b> · <b>Follow-up</b> · <b>Agendamentos</b></div>
+        </article>
+
+        <article class="agent-card" style="--agent-color:#2563EB; --card-delay:.7s; --bar-delay:1.2s; --bar-width:60%;">
+          <div class="agent-row">
+            <div class="agent-avatar" aria-hidden="true">
+              <span class="agent-initial">F</span>
+              <img src="./imgs/fin.png" alt="" onerror="this.remove()">
+            </div>
+            <div class="agent-info">
+              <div class="agent-name">Fin</div>
+              <div class="agent-role">Financeiro &amp; cobranças</div>
+            </div>
+          </div>
+          <div class="agent-progress" aria-hidden="true"><div class="agent-progress-fill"></div></div>
+          <p class="agent-desc">Manda links de Pix e cartão direto no chat, cobra quem não pagou, escaneia recibos com a câmera e mostra o lucro real do negócio.</p>
+          <div class="agent-tags"><b>Pagamentos</b> · <b>Cobranças</b> · <b>Fluxo de caixa</b></div>
+        </article>
+      </aside>
     </section>
+
 
     <!-- O QUE PRECISA -->
     <section class="ov-needs">
@@ -1665,28 +1745,6 @@
 
   const backLink = document.getElementById('back-to-overview');
   if (backLink) backLink.addEventListener('click', (e) => { e.preventDefault(); setView('overview'); });
-
-  // ============ Agent tabs (overview) ============
-  const tabs = document.querySelectorAll('.ov-tab');
-  const cards = document.querySelectorAll('.ov-card');
-  const stage = document.getElementById('ov-stage');
-  const glyph = document.getElementById('ov-glyph');
-  const accentVar = { waz: 'var(--waz)', maky: 'var(--maky)', fin: 'var(--fin)' };
-  const glyphMap = { waz: 'W', maky: 'M', fin: 'F' };
-
-  tabs.forEach(t => {
-    t.addEventListener('click', () => {
-      const agent = t.dataset.agent;
-      tabs.forEach(x => {
-        const active = x === t;
-        x.classList.toggle('active', active);
-        x.setAttribute('aria-selected', String(active));
-      });
-      cards.forEach(c => c.classList.toggle('active', c.dataset.card === agent));
-      if (stage) stage.style.setProperty('--accent', accentVar[agent]);
-      if (glyph) glyph.textContent = glyphMap[agent];
-    });
-  });
 
   // ============ Setup progress (localStorage) ============
   const STORAGE_KEY = 'squad-playbook-confeitarias-v2';
