@@ -841,7 +841,35 @@
     color: var(--ink-2);
     max-width: 56ch;
   }
-  
+
+  .ov-hero-btn {
+    appearance: none; -webkit-appearance: none;
+    margin-top: 28px;
+    background: #FFFFFF;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    padding: 14px 22px;
+    border-radius: 10px;
+    font: inherit;
+    font-size: 15px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 10px;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0,0,0,.04);
+    transition: transform .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .ov-hero-btn:hover {
+    transform: translateY(-1px);
+    background: var(--bg-2);
+    border-color: #D1D5DB;
+    box-shadow: 0 6px 14px rgba(0,0,0,.06);
+  }
+  .ov-hero-btn:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+  .ov-hero-btn .arr { transition: transform .2s ease; }
+  .ov-hero-btn:hover .arr { transform: translateX(3px); }
+
   .ov-stat { display: flex; flex-direction: column; gap: 4px; }
   .ov-stat .num {
     font-size: clamp(28px, 3.4vw, 38px); font-weight: 700; letter-spacing: -0.025em;
@@ -1111,6 +1139,10 @@
         <div class="ov-eyebrow">Bem-vinda ao squad</div>
         <h1 class="ov-title">O time de IA para a sua confeitaria, <span class="accent-stripe">em 3 agentes.</span></h1>
         <p class="ov-lede">Esse playbook vai te guiar passo a passo na configuração. Sem pressa, sem técnico, sem código. Só você, seu celular e seus doces.</p>
+        <button class="ov-hero-btn" id="start-setup-hero" type="button">
+          Iniciar setup
+          <svg class="arr" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
 
       <div class="agent-explorer" role="tablist" aria-label="Agentes do Squad">
@@ -1189,7 +1221,7 @@
           <div class="ov-eyebrow">Antes de começar</div>
           <h2>O que você vai precisar.</h2>
         </div>
-        <p>Tudo gratuito. Provavelmente você já tem.</p>
+        <p> Provavelmente você já tem.</p>
       </div>
       <div class="ov-needs-grid">
         <div class="ov-need"><svg viewBox="0 0 18 18" fill="none"><path d="M3.5 9.5l3.5 3.5 7.5-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Celular com WhatsApp Business instalado</div>
@@ -1204,12 +1236,7 @@
     <section class="ov-cta">
       <h2>Pronto pra colocar seu squad pra trabalhar?</h2>
       <p>A próxima tela é um passo a passo interativo: 4 etapas, 13 tarefas, com checkbox em cada uma. O progresso fica salvo no seu navegador — você pode parar a qualquer momento e voltar depois.</p>
-      <div class="ov-cta-meta">
-        <span><b>4</b> etapas</span>
-        <span><b>13</b> tarefas</span>
-        <span><b>~35min</b> no total</span>
-        <span><b>Progresso salvo</b> automaticamente</span>
-      </div>
+      
       <div class="ov-cta-action">
         <button class="ov-cta-btn" id="start-setup">
           Iniciar setup passo a passo
@@ -1784,8 +1811,8 @@
     }
   } catch(e) {}
 
-  const startBtn = document.getElementById('start-setup');
-  if (startBtn) startBtn.addEventListener('click', () => { setView('app'); setTimeout(setActive, 0); });
+  const startBtns = document.querySelectorAll('#start-setup, #start-setup-hero');
+  startBtns.forEach(btn => btn.addEventListener('click', () => { setView('app'); setTimeout(setActive, 0); }));
 
   const backLink = document.getElementById('back-to-overview');
   if (backLink) backLink.addEventListener('click', (e) => { e.preventDefault(); setView('overview'); });
