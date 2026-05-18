@@ -1,0 +1,1778 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Playbook squad.com — Confeitarias</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --bg-2: #F9FAFB;
+    --bg-3: #F3F4F6;
+    --line: #E5E7EB;
+    --line-2: #EEF0F3;
+    --ink: #111827;
+    --ink-2: #6B7280;
+    --ink-3: #9CA3AF;
+
+    --maky: #E91E8C;
+    --waz:  #2DB67D;
+    --fin:  #2563EB;
+
+    --sidebar-w: 248px;
+    --content-max: 720px;
+    --r: 12px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: inherit; }
+  button { font: inherit; cursor: pointer; }
+  h1, h2, h3, h4 { margin: 0; font-family: 'DM Sans', sans-serif; letter-spacing: -0.02em; }
+  p { margin: 0; }
+  code, .mono { font-family: 'DM Mono', ui-monospace, monospace; }
+
+  /* ---------- App shell ---------- */
+  .app {
+    display: grid;
+    grid-template-columns: var(--sidebar-w) 1fr;
+    min-height: 100vh;
+  }
+  @media (max-width: 900px) {
+    .app { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- Sidebar (desktop) ---------- */
+  .sidebar {
+    border-right: 1px solid var(--line);
+    background: var(--bg);
+    position: sticky; top: 0;
+    height: 100vh;
+    padding: 28px 18px 24px;
+    display: flex; flex-direction: column;
+    overflow-y: auto;
+  }
+  .sidebar .brand {
+    display: flex; align-items: center; gap: 8px;
+    font-weight: 700; letter-spacing: -0.04em; font-size: 18px;
+    padding: 0 10px 8px;
+    text-decoration: none; color: var(--ink);
+  }
+  .sidebar .brand .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--maky), var(--fin) 55%, var(--waz));
+  }
+  .sidebar .brand-sub {
+    padding: 0 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-3); margin-bottom: 22px;
+  }
+  .sidebar .label {
+    padding: 0 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-3); margin: 14px 0 6px;
+  }
+  .nav-link {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    text-decoration: none; color: var(--ink-2);
+    font-size: 14px; font-weight: 500;
+    line-height: 1.4;
+    border-left: 2px solid transparent;
+    margin-left: -2px;
+  }
+  .nav-link .ico {
+    width: 18px; height: 18px; display: inline-flex;
+    align-items: center; justify-content: center;
+    color: var(--ink-3); flex: none;
+  }
+  .nav-link:hover { background: var(--bg-2); color: var(--ink); }
+  .nav-link.active {
+    color: var(--ink); background: var(--bg-2);
+    border-left-color: var(--ink);
+  }
+  .nav-link.active .ico { color: var(--ink); }
+  .nav-link.featured { font-weight: 600; color: var(--ink); }
+
+  .sidebar .progress-card {
+    margin-top: auto;
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    background: var(--bg-2);
+  }
+  .progress-card .ptitle {
+    font-size: 12px; color: var(--ink-2); margin-bottom: 8px;
+    display: flex; justify-content: space-between;
+  }
+  .progress-card .ptitle b { color: var(--ink); font-weight: 600; }
+  .progress-track {
+    height: 6px; background: var(--line); border-radius: 999px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--maky), var(--waz) 55%, var(--fin));
+    width: 0%; transition: width .35s ease;
+    border-radius: 999px;
+  }
+  .progress-card .pmeta {
+    margin-top: 8px; font-size: 12px; color: var(--ink-2);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ---------- Mobile header ---------- */
+  .mobile-header { display: none; }
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .mobile-header {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px;
+      position: sticky; top: 0; z-index: 30;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: saturate(140%) blur(10px);
+      border-bottom: 1px solid var(--line);
+      padding: 12px 16px;
+    }
+    .mobile-header .brand {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-weight: 700; letter-spacing: -0.04em; font-size: 16px;
+      text-decoration: none; color: var(--ink);
+    }
+    .mobile-header .brand .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--maky), var(--fin) 55%, var(--waz));
+    }
+    .mobile-header select {
+      font: inherit; font-size: 14px;
+      background: var(--bg-2); border: 1px solid var(--line);
+      border-radius: 8px; padding: 8px 10px;
+      color: var(--ink);
+    }
+    .mobile-header .progbar {
+      position: absolute; left: 0; right: 0; bottom: -1px;
+      height: 2px; background: var(--line);
+    }
+    .mobile-header .progbar .fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--maky), var(--waz) 55%, var(--fin));
+      width: 0%; transition: width .35s ease;
+    }
+  }
+
+  /* ---------- Content ---------- */
+  .content {
+    padding: 36px clamp(20px, 5vw, 56px) 96px;
+    min-width: 0;
+  }
+  .doc { max-width: var(--content-max); margin: 0 auto; }
+
+  .page-header {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px; border-radius: 999px;
+    background: var(--bg-2); border: 1px solid var(--line);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  .badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--maky); }
+
+  h1.doc-title {
+    font-size: clamp(30px, 4.4vw, 38px); font-weight: 700;
+    letter-spacing: -0.03em; line-height: 1.1;
+    margin-bottom: 14px;
+  }
+  .doc-lede {
+    font-size: 18px; line-height: 1.6; color: var(--ink-2);
+    max-width: 60ch;
+  }
+
+  /* Section */
+  .section {
+    margin-top: 64px; padding-top: 4px;
+    scroll-margin-top: 24px;
+  }
+  @media (max-width: 900px) { .section { scroll-margin-top: 72px; } }
+  .section-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--ink-3); margin-bottom: 10px;
+  }
+  .section h2 {
+    font-size: clamp(24px, 3vw, 30px); font-weight: 700;
+    letter-spacing: -0.025em; line-height: 1.15;
+  }
+  .section .sub {
+    margin-top: 10px; color: var(--ink-2); font-size: 17px; max-width: 62ch;
+  }
+
+  /* Block (card) */
+  .block {
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 22px;
+    background: var(--bg);
+  }
+  .block.tinted { background: var(--bg-2); }
+  .block + .block { margin-top: 14px; }
+  .block-title {
+    font-size: 18px; font-weight: 600; margin-bottom: 8px;
+    letter-spacing: -0.015em;
+  }
+  .block p + p { margin-top: 10px; }
+  .block p { color: var(--ink-2); }
+  .block strong { color: var(--ink); font-weight: 600; }
+
+  .info-list {
+    list-style: none; padding: 0; margin: 0;
+    display: grid; gap: 10px;
+  }
+  .info-list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 15px; color: var(--ink);
+  }
+  .info-list .tick {
+    width: 18px; height: 18px; flex: none; margin-top: 3px;
+    color: var(--waz);
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px; font-weight: 500;
+    background: var(--ink); color: #fff;
+    border: 1px solid var(--ink);
+    min-height: 40px;
+    transition: background .15s ease;
+  }
+  .btn:hover { background: #000; }
+  .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+  .btn.ghost:hover { background: var(--bg-2); }
+  .btn .arr { transition: transform .2s ease; }
+  .btn:hover .arr { transform: translateX(2px); }
+
+  /* Case rows */
+  .case {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+    display: grid; gap: 12px;
+  }
+  .case:first-of-type { border-top: 1px solid var(--line); }
+  .case .name {
+    font-size: 19px; font-weight: 600; letter-spacing: -0.015em;
+  }
+  .case .link { color: var(--ink-2); font-size: 14px; }
+  .case .row {
+    display: grid; grid-template-columns: 110px 1fr; gap: 8px 16px;
+    align-items: start;
+  }
+  @media (max-width: 600px) {
+    .case .row { grid-template-columns: 1fr; gap: 4px; }
+  }
+  .case .k {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3);
+    padding-top: 2px;
+  }
+  .case .v { font-size: 15px; color: var(--ink); }
+  .placeholder {
+    background: #FFF6CC;
+    color: #5A4500;
+    border: 1px dashed #E0B900;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    display: inline-block;
+  }
+
+  /* Agent tags */
+  .tags { display: inline-flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--ink-2);
+    padding: 2px 0;
+  }
+  .tag .dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--ink-2);
+  }
+  .tag.maky .dot { background: var(--maky); }
+  .tag.waz  .dot { background: var(--waz); }
+  .tag.fin  .dot { background: var(--fin); }
+  .tag b { color: var(--ink); font-weight: 500; }
+
+  /* Agent block */
+  .agent-block {
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 26px;
+    background: var(--bg);
+  }
+  .agent-block + .agent-block { margin-top: 14px; }
+  .agent-head {
+    display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .agent-head .dot {
+    width: 10px; height: 10px; border-radius: 50%; transform: translateY(-1px);
+  }
+  .agent-block.maky .agent-head .dot { background: var(--maky); }
+  .agent-block.waz  .agent-head .dot { background: var(--waz); }
+  .agent-block.fin  .agent-head .dot { background: var(--fin); }
+  .agent-name { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+  .agent-tag { color: var(--ink-2); font-size: 15px; }
+  .agent-desc { color: var(--ink-2); font-size: 16px; margin: 10px 0 18px; max-width: 64ch; }
+  .feature-list {
+    display: flex; flex-wrap: wrap; gap: 4px 14px;
+    list-style: none; padding: 0; margin: 0;
+    font-size: 14px; color: var(--ink);
+  }
+  .feature-list li {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .feature-list li::before {
+    content: ""; width: 4px; height: 4px; border-radius: 50%;
+    background: var(--ink-3);
+  }
+  .feature-list li:first-child::before { display: none; }
+
+  /* Setup checklist */
+  .stage { margin-top: 28px; }
+  .stage-head {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .stage-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px; letter-spacing: .08em; color: var(--ink-3);
+  }
+  .stage-title {
+    font-size: 20px; font-weight: 600; letter-spacing: -0.02em;
+  }
+  .stage-tags { margin-left: auto; }
+  @media (max-width: 600px) { .stage-tags { margin-left: 0; width: 100%; } }
+
+  .check-block {
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 0;
+    margin-top: 14px;
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .task {
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--line-2);
+  }
+  .task:last-child { border-bottom: none; }
+  .task-row {
+    display: grid; grid-template-columns: auto 1fr auto; gap: 12px;
+    align-items: start;
+  }
+  .checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px; height: 20px;
+    border: 1.5px solid var(--ink-3); border-radius: 5px;
+    background: var(--bg);
+    cursor: pointer;
+    position: relative;
+    margin-top: 2px;
+    flex: none;
+    transition: background .15s ease, border-color .15s ease;
+  }
+  .checkbox:hover { border-color: var(--ink); }
+  .checkbox:checked { background: var(--ink); border-color: var(--ink); }
+  .checkbox:checked::after {
+    content: "";
+    position: absolute; left: 5px; top: 1px;
+    width: 6px; height: 11px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  .task-text {
+    font-size: 15.5px; font-weight: 500; color: var(--ink); cursor: pointer;
+    line-height: 1.5;
+    transition: opacity .2s ease;
+  }
+  .task input:checked ~ .task-main .task-text {
+    opacity: .55;
+    text-decoration: line-through;
+    text-decoration-color: var(--ink-3);
+  }
+  .task-main { min-width: 0; }
+  .task .meta {
+    font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ink-3);
+    letter-spacing: .06em; margin-top: 2px;
+  }
+  .details-toggle {
+    background: none; border: none; padding: 0;
+    font-size: 13px; color: var(--ink-2);
+    font-family: 'DM Mono', monospace; letter-spacing: .04em;
+    display: inline-flex; align-items: center; gap: 4px;
+    margin-top: 8px;
+  }
+  .details-toggle:hover { color: var(--ink); }
+  .details-toggle .chev { transition: transform .2s ease; display: inline-flex; }
+  .details-toggle[aria-expanded="true"] .chev { transform: rotate(180deg); }
+
+  .details-toggle { display: none; }
+
+  .details {
+    max-height: none !important;
+    overflow: visible;
+  }
+  .details-inner { padding-top: 10px; }
+  .details p { color: var(--ink-2); font-size: 15px; }
+  .details .menu-list {
+    list-style: none; padding: 12px 14px; margin: 12px 0 0;
+    border: 1px solid var(--line); border-radius: 8px;
+    background: var(--bg-2);
+    display: grid; gap: 6px;
+    font-family: 'DM Mono', monospace; font-size: 13px;
+  }
+  .details .menu-list li {
+    display: flex; justify-content: space-between; gap: 12px;
+  }
+  .details .menu-list .price { color: var(--ink-2); }
+  .details .examples {
+    list-style: none; padding: 0; margin: 12px 0 0;
+    display: grid; gap: 6px;
+  }
+  .details .examples li {
+    padding: 8px 12px;
+    border: 1px solid var(--line); border-radius: 8px;
+    background: var(--bg-2);
+    font-size: 14px;
+  }
+  .details .examples li::before {
+    content: "—"; color: var(--ink-3); margin-right: 8px;
+  }
+  .details ol.flow {
+    margin: 12px 0 0; padding-left: 22px;
+    display: grid; gap: 4px; color: var(--ink-2); font-size: 14.5px;
+  }
+
+  /* iPhone mockup */
+  .phone {
+    position: relative;
+    width: 200px;
+    aspect-ratio: 9 / 19.5;
+    border-radius: 36px;
+    background: #111;
+    padding: 8px;
+    flex: none;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.04);
+    margin-top: 12px;
+  }
+  .phone-screen {
+    width: 100%; height: 100%;
+    background: var(--bg-3);
+    border-radius: 28px;
+    position: relative;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .phone-status {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 16px 6px;
+    font-size: 11px; font-weight: 600; color: var(--ink);
+  }
+  .phone-status .icons { display: inline-flex; gap: 4px; align-items: center; color: var(--ink); }
+  .phone-status .icons svg { width: 12px; height: 12px; }
+  .phone-notch {
+    position: absolute; top: 7px; left: 50%; transform: translateX(-50%);
+    width: 78px; height: 22px;
+    background: #111; border-radius: 999px;
+    z-index: 2;
+  }
+  .phone-body {
+    flex: 1;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 24px 18px;
+    text-align: center;
+    gap: 10px;
+  }
+  .phone-body svg.placeholder-ic {
+    width: 32px; height: 32px; color: var(--ink-3);
+  }
+  .phone-body .ptext {
+    font-style: italic; font-size: 12px; color: var(--ink-3);
+    line-height: 1.4;
+  }
+
+  .task-phone-wrap {
+    margin-top: 14px;
+    display: flex; justify-content: flex-start;
+  }
+
+  /* Callout */
+  .callout {
+    margin-top: 14px;
+    border-left: 3px solid var(--ink);
+    background: var(--bg-2);
+    padding: 14px 16px;
+    border-radius: 0 8px 8px 0;
+    font-size: 14.5px;
+    color: var(--ink);
+    line-height: 1.55;
+    display: flex; gap: 10px;
+  }
+  .callout .ico { flex: none; }
+  .callout.maky { border-left-color: var(--maky); }
+  .callout.waz  { border-left-color: var(--waz); }
+  .callout.fin  { border-left-color: var(--fin); }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 30px; margin-top: 18px; }
+  .timeline::before {
+    content: ""; position: absolute; left: 11px; top: 8px; bottom: 8px;
+    width: 1px; background: var(--line);
+  }
+  .day {
+    position: relative; padding-bottom: 22px;
+  }
+  .day:last-child { padding-bottom: 0; }
+  .day::before {
+    content: counter(day);
+    counter-increment: day;
+    position: absolute; left: -30px; top: 0;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--bg-2); color: var(--ink-2);
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500;
+  }
+  .day.done::before {
+    background: var(--ink); color: #fff; border-color: var(--ink);
+    content: "✓";
+  }
+  .timeline { counter-reset: day; }
+  .day .head {
+    font-weight: 600; font-size: 15.5px; letter-spacing: -0.01em;
+    margin-bottom: 2px;
+  }
+  .day .body { color: var(--ink-2); font-size: 14.5px; }
+
+  /* FAQ */
+  .faq-list {
+    border-top: 1px solid var(--line);
+    margin-top: 22px;
+  }
+  .faq {
+    border-bottom: 1px solid var(--line);
+  }
+  .faq summary {
+    list-style: none; cursor: pointer;
+    display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;
+    padding: 18px 4px;
+    font-size: 16px; font-weight: 500; color: var(--ink);
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq .chev {
+    width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center;
+    color: var(--ink-3); transition: transform .2s ease;
+  }
+  .faq[open] .chev { transform: rotate(180deg); color: var(--ink); }
+  .faq-a {
+    padding: 0 4px 18px; color: var(--ink-2); font-size: 15px; line-height: 1.6;
+    max-width: 64ch;
+  }
+
+  /* Sub-checkbox detail style for ETAPA "exemplos" lists */
+  .sublist {
+    list-style: none; padding: 0; margin: 12px 0 0;
+    display: grid; gap: 4px;
+    font-size: 14px; color: var(--ink-2);
+  }
+  .sublist li::before {
+    content: "•"; color: var(--ink-3); margin-right: 8px;
+  }
+
+  /* Helpers */
+  .hidden { display: none; }
+
+  @media (min-width: 720px) {
+    .task-row.with-phone {
+      grid-template-columns: auto 1fr 220px;
+      gap: 16px 18px;
+    }
+    .task-row.with-phone .task-phone-wrap {
+      grid-column: 3;
+      grid-row: 1 / span 2;
+      margin-top: 0;
+      justify-content: flex-end;
+    }
+    .task-row.with-phone .phone { margin-top: 0; }
+  }
+
+  /* ============ Overview screen ============ */
+  body.in-app .overview { display: none; }
+  body:not(.in-app) .app { display: none; }
+
+  .overview {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--ink);
+    padding: 28px clamp(20px, 5vw, 56px) 96px;
+    position: relative;
+    overflow-x: hidden;
+  }
+  .ov-shell {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .ov-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 56px;
+  }
+  .ov-nav .brand {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-weight: 700; letter-spacing: -0.04em; font-size: 20px;
+    color: var(--ink); text-decoration: none;
+  }
+  .ov-nav .brand .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--maky), var(--fin) 55%, var(--waz));
+  }
+
+  .ov-hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 36px;
+    align-items: end;
+    margin-bottom: clamp(56px, 9vw, 96px);
+  }
+  @media (min-width: 900px) {
+    .ov-hero { grid-template-columns: 1.4fr 1fr; gap: 64px; }
+  }
+  .ov-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--ink-3);
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-bottom: 22px;
+  }
+  .ov-eyebrow::before {
+    content: ""; width: 20px; height: 1px; background: var(--ink-3);
+  }
+  .ov-title {
+    font-size: clamp(36px, 5.4vw, 60px);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+    margin: 0;
+  }
+  .ov-title .accent-stripe {
+    background-image: linear-gradient(90deg, var(--maky), var(--waz) 50%, var(--fin));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .ov-lede {
+    margin-top: 22px;
+    font-size: clamp(17px, 1.8vw, 19px);
+    line-height: 1.55;
+    color: var(--ink-2);
+    max-width: 56ch;
+  }
+  .ov-stats {
+    display: flex; flex-wrap: wrap; gap: 24px 32px;
+  }
+  .ov-stat { display: flex; flex-direction: column; gap: 4px; }
+  .ov-stat .num {
+    font-size: clamp(28px, 3.4vw, 38px); font-weight: 700; letter-spacing: -0.025em;
+    line-height: 1;
+  }
+  .ov-stat .lbl {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  /* Agents showcase */
+  .ov-agents {
+    margin-bottom: clamp(56px, 9vw, 96px);
+  }
+  .ov-section-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+    margin-bottom: 26px;
+  }
+  .ov-section-head h2 {
+    font-size: clamp(26px, 3.4vw, 34px);
+    font-weight: 700; letter-spacing: -0.025em; line-height: 1.1;
+  }
+  .ov-section-head p { color: var(--ink-2); max-width: 40ch; font-size: 15px; }
+
+  .ov-tabs {
+    display: inline-flex;
+    padding: 4px;
+    border-radius: 999px;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    gap: 0;
+    margin-bottom: 22px;
+  }
+  .ov-tab {
+    background: transparent;
+    border: none;
+    padding: 10px 18px;
+    font: inherit;
+    font-size: 14px; font-weight: 500;
+    color: var(--ink-2);
+    border-radius: 999px;
+    display: inline-flex; align-items: center; gap: 8px;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease;
+  }
+  .ov-tab:hover { color: var(--ink); }
+  .ov-tab .ov-tab-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+  }
+  .ov-tab[data-agent="maky"] .ov-tab-dot { background: var(--maky); }
+  .ov-tab[data-agent="waz"]  .ov-tab-dot { background: var(--waz); }
+  .ov-tab[data-agent="fin"]  .ov-tab-dot { background: var(--fin); }
+  .ov-tab.active {
+    background: var(--ink); color: #fff;
+  }
+
+  .ov-stage {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--bg);
+    --accent: var(--waz);
+    transition: box-shadow .35s ease;
+  }
+  .ov-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(70% 60% at 85% 15%, color-mix(in oklab, var(--accent) 16%, transparent), transparent 55%),
+      radial-gradient(60% 60% at 0% 100%, color-mix(in oklab, var(--accent) 8%, transparent), transparent 55%);
+    pointer-events: none;
+    transition: background .4s ease;
+  }
+  .ov-stage-inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: clamp(28px, 4vw, 44px);
+  }
+  @media (min-width: 760px) {
+    .ov-stage-inner { grid-template-columns: 1.2fr .8fr; gap: 40px; align-items: center; }
+  }
+  .ov-card-head {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 14px;
+  }
+  .ov-card-num {
+    font-family: 'DM Mono', monospace; font-size: 12px;
+    letter-spacing: .12em; color: var(--ink-3);
+  }
+  .ov-card-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent);
+    padding: 4px 10px; border-radius: 999px;
+    background: color-mix(in oklab, var(--accent) 10%, transparent);
+  }
+  .ov-card-name {
+    font-size: clamp(48px, 7vw, 84px);
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    line-height: .92;
+    color: var(--accent);
+    margin-bottom: 18px;
+  }
+  .ov-card-desc {
+    font-size: clamp(16px, 1.6vw, 18px);
+    color: var(--ink);
+    line-height: 1.55;
+    max-width: 52ch;
+    margin-bottom: 22px;
+  }
+  .ov-features {
+    list-style: none; padding: 0; margin: 0;
+    display: grid; gap: 10px;
+  }
+  .ov-features li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 14.5px; color: var(--ink);
+  }
+  .ov-features li::before {
+    content: "";
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    margin-top: 8px; flex: none;
+  }
+  /* Visual block (decoration, no fake UI) */
+  .ov-card-visual {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    border-radius: 14px;
+    background:
+      radial-gradient(circle at 30% 30%, color-mix(in oklab, var(--accent) 28%, transparent), transparent 60%),
+      radial-gradient(circle at 75% 70%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 55%),
+      var(--bg-2);
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .ov-card-visual .glyph {
+    font-size: clamp(120px, 16vw, 200px);
+    font-weight: 700;
+    letter-spacing: -0.06em;
+    color: var(--accent);
+    opacity: .92;
+    line-height: 1;
+  }
+  .ov-card-visual::after {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(17,24,39,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(17,24,39,.04) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+  }
+  .ov-card { display: none; }
+  .ov-card.active { display: block; animation: ovFade .35s ease both; }
+  @keyframes ovFade {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* Needs */
+  .ov-needs {
+    margin-bottom: clamp(56px, 9vw, 96px);
+  }
+  .ov-needs-grid {
+    display: grid; gap: 12px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 700px) {
+    .ov-needs-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .ov-need {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 16px 18px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--bg);
+    font-size: 15px;
+  }
+  .ov-need svg { flex: none; width: 18px; height: 18px; color: var(--waz); margin-top: 3px; }
+
+  /* CTA */
+  .ov-cta {
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background:
+      radial-gradient(80% 80% at 10% 0%, color-mix(in oklab, var(--maky) 6%, transparent), transparent 55%),
+      radial-gradient(80% 80% at 100% 100%, color-mix(in oklab, var(--fin) 6%, transparent), transparent 55%),
+      var(--bg);
+    padding: clamp(32px, 5vw, 56px);
+    text-align: left;
+  }
+  .ov-cta h2 {
+    font-size: clamp(26px, 3.4vw, 34px);
+    font-weight: 700; letter-spacing: -0.025em; line-height: 1.1;
+    max-width: 22ch;
+  }
+  .ov-cta p {
+    margin-top: 14px;
+    color: var(--ink-2);
+    font-size: 16px; line-height: 1.55;
+    max-width: 52ch;
+  }
+  .ov-cta-meta {
+    margin-top: 20px;
+    display: flex; flex-wrap: wrap; gap: 16px 28px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px; letter-spacing: .06em; color: var(--ink-2);
+  }
+  .ov-cta-meta b { color: var(--ink); font-weight: 600; }
+  .ov-cta-action { margin-top: 28px; }
+  .ov-cta-btn {
+    appearance: none; -webkit-appearance: none;
+    background: var(--ink); color: #fff;
+    border: 1px solid var(--ink);
+    padding: 18px 26px;
+    border-radius: 12px;
+    font: inherit; font-size: 16px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 10px;
+    cursor: pointer;
+    transition: transform .15s ease, background .2s ease;
+    min-height: 56px;
+  }
+  .ov-cta-btn:hover { background: #000; transform: translateY(-1px); }
+  .ov-cta-btn .arr { transition: transform .2s ease; }
+  .ov-cta-btn:hover .arr { transform: translateX(3px); }
+
+  .ov-foot {
+    margin-top: 56px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    color: var(--ink-3); font-size: 13px;
+  }
+
+  .back-link { color: var(--ink-2) !important; }
+  .back-link:hover { color: var(--ink) !important; background: var(--bg-2); }
+
+  /* Print friendliness */
+  @media print {
+    .sidebar, .mobile-header { display: none; }
+    .content { padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ OVERVIEW (fase 1) ============ -->
+<div class="overview" id="overview">
+  <div class="ov-shell">
+
+    <header class="ov-nav">
+      <a href="#" class="brand"><span class="dot" aria-hidden="true"></span>squad.com</a>
+      <span class="badge"><span class="dot"></span>Playbook · Confeitarias</span>
+    </header>
+
+    <section class="ov-hero">
+      <div>
+        <div class="ov-eyebrow">Bem-vinda ao squad</div>
+        <h1 class="ov-title">Seu time de IA pra confeitaria, <span class="accent-stripe">em 3 agentes.</span></h1>
+        <p class="ov-lede">Este playbook vai te apresentar os três agentes e depois te guiar passo a passo na configuração. Sem pressa, sem técnico, sem código — só você, seu celular e seus doces.</p>
+      </div>
+      <div class="ov-stats">
+        <div class="ov-stat"><span class="num">3</span><span class="lbl">Agentes de IA</span></div>
+        <div class="ov-stat"><span class="num">4</span><span class="lbl">Etapas de setup</span></div>
+        <div class="ov-stat"><span class="num">~35min</span><span class="lbl">Pra configurar</span></div>
+      </div>
+    </section>
+
+    <!-- AGENTES (dinâmico, tabs) -->
+    <section class="ov-agents">
+      <div class="ov-section-head">
+        <div>
+          <div class="ov-eyebrow">Conheça seu time</div>
+          <h2>Seus 3 agentes.</h2>
+        </div>
+        <p>Clique em cada agente pra ver o que ele faz. Você pode ativar todos ou começar só com um.</p>
+      </div>
+
+      <div class="ov-tabs" role="tablist" aria-label="Selecionar agente">
+        <button class="ov-tab active" data-agent="waz" role="tab" aria-selected="true"><span class="ov-tab-dot"></span>Waz · Atendimento</button>
+        <button class="ov-tab" data-agent="maky" role="tab" aria-selected="false"><span class="ov-tab-dot"></span>Maky · Marketing</button>
+        <button class="ov-tab" data-agent="fin" role="tab" aria-selected="false"><span class="ov-tab-dot"></span>Fin · Financeiro</button>
+      </div>
+
+      <div class="ov-stage" id="ov-stage">
+        <div class="ov-stage-inner">
+          <div>
+            <!-- WAZ -->
+            <div class="ov-card active" data-card="waz">
+              <div class="ov-card-head">
+                <span class="ov-card-num">02 · agente</span>
+                <span class="ov-card-role">Atendimento 24h</span>
+              </div>
+              <div class="ov-card-name">Waz</div>
+              <p class="ov-card-desc">Responde suas clientes no WhatsApp e no Instagram com o cardápio atualizado, tira dúvidas sobre encomendas, faz follow-up de quem não fechou, e te avisa quando não sabe responder algo.</p>
+              <ul class="ov-features">
+                <li>Atendimento 24h no WhatsApp e Instagram</li>
+                <li>Responde dúvidas com base no seu cardápio</li>
+                <li>Follow-ups inteligentes com quem não fechou</li>
+                <li>Controle de agendamentos</li>
+                <li>Escala pra você quando precisa</li>
+              </ul>
+            </div>
+            <!-- MAKY -->
+            <div class="ov-card" data-card="maky">
+              <div class="ov-card-head">
+                <span class="ov-card-num">01 · agente</span>
+                <span class="ov-card-role">Marketing &amp; conteúdo</span>
+              </div>
+              <div class="ov-card-name">Maky</div>
+              <p class="ov-card-desc">Cria posts prontos pro Instagram com fotos dos seus doces, responde comentários automaticamente, e manda mensagens no WhatsApp pra quem sumiu — trazendo clientes de volta pra comprar de novo.</p>
+              <ul class="ov-features">
+                <li>Criação de campanhas e posts pro Instagram</li>
+                <li>Publicação automática (com sua aprovação)</li>
+                <li>Responde comentários</li>
+                <li>Reativação de clientes que sumiram</li>
+                <li>Coleta de avaliações</li>
+              </ul>
+            </div>
+            <!-- FIN -->
+            <div class="ov-card" data-card="fin">
+              <div class="ov-card-head">
+                <span class="ov-card-num">03 · agente</span>
+                <span class="ov-card-role">Financeiro &amp; cobrança</span>
+              </div>
+              <div class="ov-card-name">Fin</div>
+              <p class="ov-card-desc">Manda link de pagamento por Pix ou cartão direto no WhatsApp, acompanha quem ainda não pagou, escaneia recibos dos fornecedores, e te mostra se o negócio tá dando lucro de verdade.</p>
+              <ul class="ov-features">
+                <li>Links de pagamento por Pix e cartão</li>
+                <li>Fluxo de caixa atualizado</li>
+                <li>Escaneia recibos com a câmera</li>
+                <li>Lembrete de contas a pagar</li>
+                <li>Cobra automaticamente quem não pagou</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="ov-card-visual" aria-hidden="true">
+            <span class="glyph" id="ov-glyph">W</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- O QUE PRECISA -->
+    <section class="ov-needs">
+      <div class="ov-section-head">
+        <div>
+          <div class="ov-eyebrow">Antes de começar</div>
+          <h2>O que você vai precisar.</h2>
+        </div>
+        <p>Tudo gratuito. Provavelmente você já tem.</p>
+      </div>
+      <div class="ov-needs-grid">
+        <div class="ov-need"><svg viewBox="0 0 18 18" fill="none"><path d="M3.5 9.5l3.5 3.5 7.5-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Celular com WhatsApp Business instalado</div>
+        <div class="ov-need"><svg viewBox="0 0 18 18" fill="none"><path d="M3.5 9.5l3.5 3.5 7.5-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Conta no Instagram (perfil comercial)</div>
+        <div class="ov-need"><svg viewBox="0 0 18 18" fill="none"><path d="M3.5 9.5l3.5 3.5 7.5-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Acesso ao Facebook/Meta do seu negócio</div>
+        <div class="ov-need"><svg viewBox="0 0 18 18" fill="none"><path d="M3.5 9.5l3.5 3.5 7.5-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Lista dos seus produtos com preços</div>
+        <div class="ov-need"><svg viewBox="0 0 18 18" fill="none"><path d="M3.5 9.5l3.5 3.5 7.5-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Fotos dos seus principais produtos</div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="ov-cta">
+      <h2>Pronto pra colocar seu squad pra trabalhar?</h2>
+      <p>A próxima tela é um passo a passo interativo: 4 etapas, 13 tarefas, com checkbox em cada uma. O progresso fica salvo no seu navegador — você pode parar a qualquer momento e voltar depois.</p>
+      <div class="ov-cta-meta">
+        <span><b>4</b> etapas</span>
+        <span><b>13</b> tarefas</span>
+        <span><b>~35min</b> no total</span>
+        <span><b>Progresso salvo</b> automaticamente</span>
+      </div>
+      <div class="ov-cta-action">
+        <button class="ov-cta-btn" id="start-setup">
+          Iniciar setup passo a passo
+          <svg class="arr" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <footer class="ov-foot">
+      <span>squad.com · Playbook para Confeitarias</span>
+      <span>2026</span>
+    </footer>
+
+  </div>
+</div>
+
+<!-- ============ APP (fase 2: setup) ============ -->
+<div class="app">
+
+  <!-- ============ SIDEBAR (desktop) ============ -->
+  <aside class="sidebar" aria-label="Navegação">
+    <a href="#top" class="brand"><span class="dot" aria-hidden="true"></span>squad.com</a>
+    <div class="brand-sub">Playbook · Confeitarias</div>
+
+    <div class="label">Conteúdo</div>
+    <a class="nav-link back-link" href="#" id="back-to-overview">
+      <span class="ico"><svg viewBox="0 0 16 16" fill="none"><path d="M9.5 3.5L5.5 8l4 4.5M5.5 8h7.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      Voltar à visão geral
+    </a>
+
+    <div class="label" style="margin-top: 18px;">Setup</div>
+    <a class="nav-link featured" href="#setup">
+      <span class="ico"><svg viewBox="0 0 16 16" fill="none"><path d="M3 4.5h8M3 8h5M3 11.5h7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><rect x="11.5" y="6.5" width="3" height="3" rx=".5" stroke="currentColor" stroke-width="1.4"/></svg></span>
+      Setup passo a passo
+    </a>
+    <a class="nav-link" href="#semana">
+      <span class="ico"><svg viewBox="0 0 16 16" fill="none"><rect x="2.5" y="3.5" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M2.5 6.5h11M5.5 2.5v2M10.5 2.5v2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+      Primeiros 7 dias
+    </a>
+    <a class="nav-link" href="#faq">
+      <span class="ico"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5.5" stroke="currentColor" stroke-width="1.4"/><path d="M6.5 6.5c0-1 .7-1.5 1.5-1.5s1.5.5 1.5 1.5c0 .8-.7 1.2-1.5 1.5v1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="11.5" r=".7" fill="currentColor"/></svg></span>
+      Dúvidas comuns
+    </a>
+    <a class="nav-link" href="#suporte">
+      <span class="ico"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 4.5a1.5 1.5 0 0 1 1.5-1.5h8a1.5 1.5 0 0 1 1.5 1.5v6a1.5 1.5 0 0 1-1.5 1.5H6l-3 2.5v-2.5h-.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
+      Suporte
+    </a>
+
+    <div class="progress-card" aria-live="polite">
+      <div class="ptitle"><span>Setup</span><span><b id="prog-done">0</b>/<span id="prog-total">12</span></span></div>
+      <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
+      <div class="pmeta"><span id="prog-pct">0%</span> completo</div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN CONTENT ============ -->
+  <main class="content" id="top">
+
+    <!-- Mobile header -->
+    <div class="mobile-header">
+      <a href="#top" class="brand"><span class="dot" aria-hidden="true"></span>squad.com</a>
+      <select id="mobile-nav" aria-label="Ir para seção">
+        <option value="#setup">Setup</option>
+        <option value="#semana">7 dias</option>
+        <option value="#faq">Dúvidas</option>
+        <option value="#suporte">Suporte</option>
+      </select>
+      <div class="progbar"><div class="fill" id="prog-fill-m"></div></div>
+    </div>
+
+    <div class="doc">
+
+      <!-- ============ SETUP ============ -->
+      <section class="section" id="setup" style="margin-top: 8px;">
+        <div class="section-eyebrow">Setup</div>
+        <h2>Configure seu squad</h2>
+        <p class="sub">Marque cada passo conforme for completando. Seu progresso fica salvo automaticamente.</p>
+
+        <!-- ETAPA 1 -->
+        <div class="stage">
+          <div class="stage-head">
+            <span class="stage-num">Etapa 01</span>
+            <span class="stage-title">Conecte suas redes</span>
+            <span class="stage-tags tags">
+              <span class="tag waz"><span class="dot"></span><b>Waz</b></span>
+              <span class="tag maky"><span class="dot"></span><b>Maky</b></span>
+            </span>
+          </div>
+
+          <div class="check-block">
+            <!-- task -->
+            <div class="task">
+              <div class="task-row with-phone">
+                <input type="checkbox" class="checkbox" id="t-1-1" data-task />
+                <div class="task-main">
+                  <label class="task-text" for="t-1-1">Conecte seu Instagram ao squad</label>
+                  <button class="details-toggle" aria-expanded="false" aria-controls="d-1-1"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <div class="details" id="d-1-1">
+                    <div class="details-inner">
+                      <p>Abra o app squad, vá em <strong>Configurações &gt; Redes Sociais &gt; Instagram</strong>. Siga as instruções pra conectar. Você vai precisar do login do Facebook conectado ao Instagram do seu negócio.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="task-phone-wrap">
+                  <div class="phone" aria-hidden="true">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                      <div class="phone-status"><span>9:41</span><span class="icons"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M1 11h2v2H1zM4 8h2v5H4zM7 5h2v8H7zM10 2h2v11h-2z"/></svg><svg viewBox="0 0 14 14" fill="none"><rect x="1.5" y="4.5" width="9" height="5" rx="1" stroke="currentColor" stroke-width="1"/><rect x="11" y="6" width="1.5" height="2" rx=".3" fill="currentColor"/></svg></span></div>
+                      <div class="phone-body">
+                        <svg class="placeholder-ic" viewBox="0 0 32 32" fill="none"><rect x="3" y="6" width="26" height="20" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M3 22l7-6 6 4 5-3 8 5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="11" cy="12" r="2" stroke="currentColor" stroke-width="1.6"/></svg>
+                        <div class="ptext">Tela de conexão com Instagram</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="task">
+              <div class="task-row with-phone">
+                <input type="checkbox" class="checkbox" id="t-1-2" data-task />
+                <div class="task-main">
+                  <label class="task-text" for="t-1-2">Conecte seu WhatsApp Business</label>
+                  <button class="details-toggle" aria-expanded="false" aria-controls="d-1-2"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <div class="details" id="d-1-2">
+                    <div class="details-inner">
+                      <p>Na mesma tela, toque em <strong>WhatsApp Business</strong> e siga o processo. Se você usa WhatsApp normal, baixe o WhatsApp Business primeiro — é grátis e você migra sem perder conversas.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="task-phone-wrap">
+                  <div class="phone" aria-hidden="true">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                      <div class="phone-status"><span>9:41</span><span class="icons"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M1 11h2v2H1zM4 8h2v5H4zM7 5h2v8H7zM10 2h2v11h-2z"/></svg><svg viewBox="0 0 14 14" fill="none"><rect x="1.5" y="4.5" width="9" height="5" rx="1" stroke="currentColor" stroke-width="1"/><rect x="11" y="6" width="1.5" height="2" rx=".3" fill="currentColor"/></svg></span></div>
+                      <div class="phone-body">
+                        <svg class="placeholder-ic" viewBox="0 0 32 32" fill="none"><rect x="3" y="6" width="26" height="20" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M3 22l7-6 6 4 5-3 8 5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="11" cy="12" r="2" stroke="currentColor" stroke-width="1.6"/></svg>
+                        <div class="ptext">Tela de conexão com WhatsApp Business</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="task">
+              <div class="task-row with-phone">
+                <input type="checkbox" class="checkbox" id="t-1-3" data-task />
+                <div class="task-main">
+                  <label class="task-text" for="t-1-3">Confirme que as duas redes estão conectadas</label>
+                  <button class="details-toggle" aria-expanded="false" aria-controls="d-1-3"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <div class="details" id="d-1-3">
+                    <div class="details-inner">
+                      <p>Volte pra tela de Configurações e veja se Instagram e WhatsApp aparecem com <strong>✅ verde</strong>.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="task-phone-wrap">
+                  <div class="phone" aria-hidden="true">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                      <div class="phone-status"><span>9:41</span><span class="icons"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M1 11h2v2H1zM4 8h2v5H4zM7 5h2v8H7zM10 2h2v11h-2z"/></svg><svg viewBox="0 0 14 14" fill="none"><rect x="1.5" y="4.5" width="9" height="5" rx="1" stroke="currentColor" stroke-width="1"/><rect x="11" y="6" width="1.5" height="2" rx=".3" fill="currentColor"/></svg></span></div>
+                      <div class="phone-body">
+                        <svg class="placeholder-ic" viewBox="0 0 32 32" fill="none"><rect x="3" y="6" width="26" height="20" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M3 22l7-6 6 4 5-3 8 5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="11" cy="12" r="2" stroke="currentColor" stroke-width="1.6"/></svg>
+                        <div class="ptext">Tela de confirmação — redes conectadas</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout waz">
+            <span class="ico" aria-hidden="true">💡</span>
+            <span>Se você ainda usa WhatsApp normal, baixe o <strong>WhatsApp Business</strong> na loja do celular. É grátis e você migra sem perder conversas.</span>
+          </div>
+        </div>
+
+        <!-- ETAPA 2 -->
+        <div class="stage">
+          <div class="stage-head">
+            <span class="stage-num">Etapa 02</span>
+            <span class="stage-title">Monte seu catálogo</span>
+            <span class="stage-tags tags">
+              <span class="tag waz"><span class="dot"></span><b>Waz</b></span>
+              <span class="tag fin"><span class="dot"></span><b>Fin</b></span>
+            </span>
+          </div>
+
+          <div class="check-block">
+            <div class="task">
+              <div class="task-row with-phone">
+                <input type="checkbox" class="checkbox" id="t-2-1" data-task />
+                <div class="task-main">
+                  <label class="task-text" for="t-2-1">Cadastre seu primeiro produto</label>
+                  <button class="details-toggle" aria-expanded="false" aria-controls="d-2-1"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <div class="details" id="d-2-1">
+                    <div class="details-inner">
+                      <p>Vá em <strong>Catálogo &gt; Adicionar Produto</strong>. Preencha nome, preço e uma foto. Exemplo: Bolo de chocolate — R$ 85,00.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="task-phone-wrap">
+                  <div class="phone" aria-hidden="true">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                      <div class="phone-status"><span>9:41</span><span class="icons"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M1 11h2v2H1zM4 8h2v5H4zM7 5h2v8H7zM10 2h2v11h-2z"/></svg><svg viewBox="0 0 14 14" fill="none"><rect x="1.5" y="4.5" width="9" height="5" rx="1" stroke="currentColor" stroke-width="1"/><rect x="11" y="6" width="1.5" height="2" rx=".3" fill="currentColor"/></svg></span></div>
+                      <div class="phone-body">
+                        <svg class="placeholder-ic" viewBox="0 0 32 32" fill="none"><rect x="3" y="6" width="26" height="20" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M3 22l7-6 6 4 5-3 8 5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="11" cy="12" r="2" stroke="currentColor" stroke-width="1.6"/></svg>
+                        <div class="ptext">Tela de cadastro de produto</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="task">
+              <div class="task-row with-phone">
+                <input type="checkbox" class="checkbox" id="t-2-2" data-task />
+                <div class="task-main">
+                  <label class="task-text" for="t-2-2">Adicione pelo menos 5 produtos</label>
+                  <button class="details-toggle" aria-expanded="false" aria-controls="d-2-2"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <div class="details" id="d-2-2">
+                    <div class="details-inner">
+                      <p>Seus 5 produtos mais vendidos já são suficientes pra começar. Você pode adicionar mais depois — não esqueça dos preços.</p>
+                      <ul class="menu-list">
+                        <li><span>Bolo de chocolate</span><span class="price">R$ 85,00</span></li>
+                        <li><span>Caixa de brigadeiros (20 un)</span><span class="price">R$ 45,00</span></li>
+                        <li><span>Ovo de Páscoa 250g</span><span class="price">R$ 65,00</span></li>
+                        <li><span>Bolo de pote</span><span class="price">R$ 12,00</span></li>
+                        <li><span>Caixa de trufas (12 un)</span><span class="price">R$ 38,00</span></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="task-phone-wrap">
+                  <div class="phone" aria-hidden="true">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                      <div class="phone-status"><span>9:41</span><span class="icons"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M1 11h2v2H1zM4 8h2v5H4zM7 5h2v8H7zM10 2h2v11h-2z"/></svg><svg viewBox="0 0 14 14" fill="none"><rect x="1.5" y="4.5" width="9" height="5" rx="1" stroke="currentColor" stroke-width="1"/><rect x="11" y="6" width="1.5" height="2" rx=".3" fill="currentColor"/></svg></span></div>
+                      <div class="phone-body">
+                        <svg class="placeholder-ic" viewBox="0 0 32 32" fill="none"><rect x="3" y="6" width="26" height="20" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M3 22l7-6 6 4 5-3 8 5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="11" cy="12" r="2" stroke="currentColor" stroke-width="1.6"/></svg>
+                        <div class="ptext">Catálogo com produtos cadastrados</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="task">
+              <div class="task-row">
+                <input type="checkbox" class="checkbox" id="t-2-3" data-task />
+                <div class="task-main">
+                  <label class="task-text" for="t-2-3">Confira se todos os preços estão certos</label>
+                  <button class="details-toggle" aria-expanded="false" aria-controls="d-2-3"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <div class="details" id="d-2-3">
+                    <div class="details-inner">
+                      <p>Volte na lista de produtos e revise. O Waz vai usar esses preços pra responder clientes, e o Fin pra gerar links de pagamento.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout fin">
+            <span class="ico" aria-hidden="true">💡</span>
+            <span>Não precisa cadastrar tudo de uma vez. Comece com os <strong>5 mais vendidos</strong> e vá adicionando ao longo da semana.</span>
+          </div>
+        </div>
+
+        <!-- ETAPA 3 -->
+        <div class="stage">
+          <div class="stage-head">
+            <span class="stage-num">Etapa 03</span>
+            <span class="stage-title">Dê personalidade aos agentes</span>
+            <span class="stage-tags tags">
+              <span class="tag waz"><span class="dot"></span><b>Waz</b></span>
+              <span class="tag maky"><span class="dot"></span><b>Maky</b></span>
+              <span class="tag fin"><span class="dot"></span><b>Fin</b></span>
+            </span>
+          </div>
+
+          <div class="check-block">
+            <div class="task">
+              <div class="task-row with-phone">
+                <input type="checkbox" class="checkbox" id="t-3-1" data-task />
+                <div class="task-main">
+                  <label class="task-text" for="t-3-1">Defina o tom de voz do atendimento</label>
+                  <button class="details-toggle" aria-expanded="false" aria-controls="d-3-1"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <div class="details" id="d-3-1">
+                    <div class="details-inner">
+                      <p>Vá em <strong>Agentes &gt; Waz &gt; Personalidade</strong>. Diga como você quer que ele responda. Exemplo: <em>"Carinhoso e próximo, usa emoji de coração e bolo 🎂💕, chama a cliente pelo nome."</em></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="task-phone-wrap">
+                  <div class="phone" aria-hidden="true">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                      <div class="phone-status"><span>9:41</span><span class="icons"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M1 11h2v2H1zM4 8h2v5H4zM7 5h2v8H7zM10 2h2v11h-2z"/></svg><svg viewBox="0 0 14 14" fill="none"><rect x="1.5" y="4.5" width="9" height="5" rx="1" stroke="currentColor" stroke-width="1"/><rect x="11" y="6" width="1.5" height="2" rx=".3" fill="currentColor"/></svg></span></div>
+                      <div class="phone-body">
+                        <svg class="placeholder-ic" viewBox="0 0 32 32" fill="none"><rect x="3" y="6" width="26" height="20" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M3 22l7-6 6 4 5-3 8 5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="11" cy="12" r="2" stroke="currentColor" stroke-width="1.6"/></svg>
+                        <div class="ptext">Tela de personalização do Waz</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="task">
+              <div class="task-row">
+                <input type="checkbox" class="checkbox" id="t-3-2" data-task />
+                <div class="task-main">
+                  <label class="task-text" for="t-3-2">Adicione as regras do seu negócio</label>
+                  <button class="details-toggle" aria-expanded="false" aria-controls="d-3-2"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <div class="details" id="d-3-2">
+                    <div class="details-inner">
+                      <p>Ainda nas configurações do Waz, adicione informações importantes:</p>
+                      <ul class="examples">
+                        <li>Encomendas precisam de 48h de antecedência</li>
+                        <li>Não fazemos bolo sem glúten</li>
+                        <li>Entregamos apenas na Zona Sul de SP</li>
+                        <li>Horário de atendimento: seg–sáb 9h–18h</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="task">
+              <div class="task-row with-phone">
+                <input type="checkbox" class="checkbox" id="t-3-3" data-task />
+                <div class="task-main">
+                  <label class="task-text" for="t-3-3">Configure a Maky (marketing)</label>
+                  <button class="details-toggle" aria-expanded="false" aria-controls="d-3-3"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <div class="details" id="d-3-3">
+                    <div class="details-inner">
+                      <p>Vá em <strong>Agentes &gt; Maky &gt; Preferências</strong>. Defina o estilo visual dos posts e o tipo de conteúdo que faz sentido pro seu perfil.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="task-phone-wrap">
+                  <div class="phone" aria-hidden="true">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                      <div class="phone-status"><span>9:41</span><span class="icons"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M1 11h2v2H1zM4 8h2v5H4zM7 5h2v8H7zM10 2h2v11h-2z"/></svg><svg viewBox="0 0 14 14" fill="none"><rect x="1.5" y="4.5" width="9" height="5" rx="1" stroke="currentColor" stroke-width="1"/><rect x="11" y="6" width="1.5" height="2" rx=".3" fill="currentColor"/></svg></span></div>
+                      <div class="phone-body">
+                        <svg class="placeholder-ic" viewBox="0 0 32 32" fill="none"><rect x="3" y="6" width="26" height="20" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M3 22l7-6 6 4 5-3 8 5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="11" cy="12" r="2" stroke="currentColor" stroke-width="1.6"/></svg>
+                        <div class="ptext">Tela de personalização da Maky</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="task">
+              <div class="task-row with-phone">
+                <input type="checkbox" class="checkbox" id="t-3-4" data-task />
+                <div class="task-main">
+                  <label class="task-text" for="t-3-4">Configure o Fin (financeiro)</label>
+                  <button class="details-toggle" aria-expanded="false" aria-controls="d-3-4"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <div class="details" id="d-3-4">
+                    <div class="details-inner">
+                      <p>Vá em <strong>Agentes &gt; Fin &gt; Pagamentos</strong>. Configure sua chave Pix e/ou dados pra receber cartão.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="task-phone-wrap">
+                  <div class="phone" aria-hidden="true">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                      <div class="phone-status"><span>9:41</span><span class="icons"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M1 11h2v2H1zM4 8h2v5H4zM7 5h2v8H7zM10 2h2v11h-2z"/></svg><svg viewBox="0 0 14 14" fill="none"><rect x="1.5" y="4.5" width="9" height="5" rx="1" stroke="currentColor" stroke-width="1"/><rect x="11" y="6" width="1.5" height="2" rx=".3" fill="currentColor"/></svg></span></div>
+                      <div class="phone-body">
+                        <svg class="placeholder-ic" viewBox="0 0 32 32" fill="none"><rect x="3" y="6" width="26" height="20" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M3 22l7-6 6 4 5-3 8 5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="11" cy="12" r="2" stroke="currentColor" stroke-width="1.6"/></svg>
+                        <div class="ptext">Tela de personalização do Fin</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout maky">
+            <span class="ico" aria-hidden="true">💡</span>
+            <span>Pense nas <strong>10 perguntas que suas clientes mais fazem</strong> no WhatsApp. Se você colocar essas respostas nas guidelines do Waz, ele já vai saber responder sozinho.</span>
+          </div>
+        </div>
+
+        <!-- ETAPA 4 -->
+        <div class="stage">
+          <div class="stage-head">
+            <span class="stage-num">Etapa 04</span>
+            <span class="stage-title">Ative o modo Co-Piloto</span>
+            <span class="stage-tags tags">
+              <span class="tag waz"><span class="dot"></span><b>Waz</b></span>
+            </span>
+          </div>
+
+          <div class="check-block">
+            <div class="task">
+              <div class="task-row with-phone">
+                <input type="checkbox" class="checkbox" id="t-4-1" data-task />
+                <div class="task-main">
+                  <label class="task-text" for="t-4-1">Ative o modo Co-Piloto do Waz</label>
+                  <button class="details-toggle" aria-expanded="false" aria-controls="d-4-1"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <div class="details" id="d-4-1">
+                    <div class="details-inner">
+                      <p>Nos primeiros dias, o Waz não manda mensagem sozinho. Ele prepara <strong>3 sugestões de resposta</strong> e você escolhe a melhor.</p>
+                      <ol class="flow">
+                        <li>Cliente manda mensagem</li>
+                        <li>Waz prepara 3 opções de resposta</li>
+                        <li>Você escolhe, edita se quiser, e envia</li>
+                        <li>Se o Waz não sabe responder, ele te notifica</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+                <div class="task-phone-wrap">
+                  <div class="phone" aria-hidden="true">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                      <div class="phone-status"><span>9:41</span><span class="icons"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M1 11h2v2H1zM4 8h2v5H4zM7 5h2v8H7zM10 2h2v11h-2z"/></svg><svg viewBox="0 0 14 14" fill="none"><rect x="1.5" y="4.5" width="9" height="5" rx="1" stroke="currentColor" stroke-width="1"/><rect x="11" y="6" width="1.5" height="2" rx=".3" fill="currentColor"/></svg></span></div>
+                      <div class="phone-body">
+                        <svg class="placeholder-ic" viewBox="0 0 32 32" fill="none"><rect x="3" y="6" width="26" height="20" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M3 22l7-6 6 4 5-3 8 5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="11" cy="12" r="2" stroke="currentColor" stroke-width="1.6"/></svg>
+                        <div class="ptext">Tela do modo co-piloto com 3 sugestões</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="task">
+              <div class="task-row">
+                <input type="checkbox" class="checkbox" id="t-4-2" data-task />
+                <div class="task-main">
+                  <label class="task-text" for="t-4-2">Responda às primeiras 5 mensagens pelo co-piloto</label>
+                  <button class="details-toggle" aria-expanded="false" aria-controls="d-4-2"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <div class="details" id="d-4-2">
+                    <div class="details-inner">
+                      <p>Acompanhe as primeiras interações. O Waz tá respondendo bem? As sugestões fazem sentido? Se algo estiver errado, ajuste nas guidelines.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="task">
+              <div class="task-row with-phone">
+                <input type="checkbox" class="checkbox" id="t-4-3" data-task />
+                <div class="task-main">
+                  <label class="task-text" for="t-4-3">Quando estiver confortável, ative o Piloto Automático</label>
+                  <button class="details-toggle" aria-expanded="false" aria-controls="d-4-3"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <div class="details" id="d-4-3">
+                    <div class="details-inner">
+                      <p>Vá em <strong>Agentes &gt; Waz &gt; Modo de operação &gt; Piloto Automático</strong>. A partir daí, o Waz responde sozinho e só te avisa quando não sabe algo. Você pode voltar pro co-piloto a qualquer momento.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="task-phone-wrap">
+                  <div class="phone" aria-hidden="true">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                      <div class="phone-status"><span>9:41</span><span class="icons"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M1 11h2v2H1zM4 8h2v5H4zM7 5h2v8H7zM10 2h2v11h-2z"/></svg><svg viewBox="0 0 14 14" fill="none"><rect x="1.5" y="4.5" width="9" height="5" rx="1" stroke="currentColor" stroke-width="1"/><rect x="11" y="6" width="1.5" height="2" rx=".3" fill="currentColor"/></svg></span></div>
+                      <div class="phone-body">
+                        <svg class="placeholder-ic" viewBox="0 0 32 32" fill="none"><rect x="3" y="6" width="26" height="20" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M3 22l7-6 6 4 5-3 8 5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="11" cy="12" r="2" stroke="currentColor" stroke-width="1.6"/></svg>
+                        <div class="ptext">Tela de alternância co-piloto / piloto automático</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout waz">
+            <span class="ico" aria-hidden="true">💡</span>
+            <span>A maioria das confeitarias ativa o piloto automático <strong>entre 3 e 7 dias</strong>. Não precisa ter pressa — vá no seu ritmo.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 5. PRIMEIROS 7 DIAS ============ -->
+      <section class="section" id="semana">
+        <div class="section-eyebrow">Primeira semana</div>
+        <h2>Sua primeira semana</h2>
+        <p class="sub">Um checklist dia a dia pra você não se perder depois do setup.</p>
+
+        <div class="timeline">
+          <div class="day"><div class="head">Confira as primeiras conversas do Waz</div><div class="body">Ele respondeu certo? Ajuste guidelines se precisar.</div></div>
+          <div class="day"><div class="head">Veja a primeira sugestão de post da Maky</div><div class="body">Gostou? Agende a publicação.</div></div>
+          <div class="day"><div class="head">Cadastre mais produtos no catálogo</div><div class="body">Quanto mais completo, melhor o atendimento.</div></div>
+          <div class="day"><div class="head">Confira o resumo diário do Waz</div><div class="body">Quantas conversas ele teve? Alguma ficou pendente?</div></div>
+          <div class="day"><div class="head">Olhe o fluxo de caixa no Fin</div><div class="body">As vendas da semana já estão aparecendo?</div></div>
+          <div class="day"><div class="head">Revise as respostas do Waz</div><div class="body">Sentiu confiança? Considere ativar o piloto automático.</div></div>
+          <div class="day"><div class="head">Primeira semana completa 🎉</div><div class="body">Veja o resumo geral e ajuste o que precisar.</div></div>
+        </div>
+      </section>
+
+      <!-- ============ 6. FAQ ============ -->
+      <section class="section" id="faq">
+        <div class="section-eyebrow">FAQ</div>
+        <h2>Dúvidas comuns</h2>
+
+        <div class="faq-list">
+          <details class="faq"><summary>O Waz respondeu algo errado. Como corrijo?<span class="chev"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary><div class="faq-a">Vá nas guidelines e adicione a informação correta. O Waz aprende na hora. Se quiser, ative o co-piloto por uns dias até ter certeza.</div></details>
+          <details class="faq"><summary>Quero mudar meu cardápio ou os preços.<span class="chev"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary><div class="faq-a">Edite no catálogo dentro do app. A mudança é instantânea — o Waz já responde com os novos preços.</div></details>
+          <details class="faq"><summary>Qual a diferença entre co-piloto e piloto automático?<span class="chev"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary><div class="faq-a">No co-piloto, o Waz te mostra 3 sugestões e você escolhe. No automático, ele responde sozinho e só te avisa quando não sabe. Você alterna entre os dois a qualquer momento.</div></details>
+          <details class="faq"><summary>Posso usar só um agente e não os três?<span class="chev"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary><div class="faq-a">Sim! Cada agente é independente. Comece com o Waz e ative os outros quando quiser.</div></details>
+          <details class="faq"><summary>A Maky posta sem eu aprovar?<span class="chev"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary><div class="faq-a">Não. Ela cria o conteúdo e manda pra sua aprovação. Só publica quando você autorizar.</div></details>
+          <details class="faq"><summary>Preciso de WhatsApp Business?<span class="chev"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary><div class="faq-a">Sim, é obrigatório. É grátis e você migra do WhatsApp normal sem perder conversas.</div></details>
+          <details class="faq"><summary>Minha cliente quer falar comigo, não com o robô.<span class="chev"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary><div class="faq-a">O Waz tem escalação pra humano. Quando precisa de você, ele te notifica e você assume.</div></details>
+          <details class="faq"><summary>Quanto tempo leva pra configurar tudo?<span class="chev"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary><div class="faq-a">30–40 minutos pro básico. O catálogo é o que mais demora, mas pode ir completando aos poucos.</div></details>
+        </div>
+      </section>
+
+      <!-- ============ 7. SUPORTE ============ -->
+      <section class="section" id="suporte">
+        <div class="section-eyebrow">Suporte</div>
+        <h2>Precisa de ajuda?</h2>
+        <p class="sub">Se travou em algum passo, a gente resolve rápido. Nosso time tá no WhatsApp.</p>
+
+        <div class="block" style="margin-top: 22px;">
+          <p style="color: var(--ink); font-size: 16px;">Sem robô, sem fila — é gente de verdade. Manda mensagem e a gente te responde direto no WhatsApp.</p>
+          <div style="margin-top: 18px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+            <a class="btn" href="https://wa.me/SEUNUMERO">
+              Falar com o time
+              <svg class="arr" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <span class="mono" style="color: var(--ink-2); font-size: 13px;">seg–sex · 9h às 18h</span>
+          </div>
+        </div>
+
+        <p style="margin-top: 38px; color: var(--ink-3); font-size: 13px; text-align: center;">
+          squad.com · Playbook para Confeitarias · 2026
+        </p>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  // ============ View switcher (Overview <-> App) ============
+  const VIEW_KEY = 'squad-playbook-view';
+  const STATE_KEY_FRESH = false; // restore previous view on refresh
+
+  function setView(view, opts) {
+    opts = opts || {};
+    if (view === 'app') {
+      document.body.classList.add('in-app');
+      try { localStorage.setItem(VIEW_KEY, 'app'); } catch(e){}
+    } else {
+      document.body.classList.remove('in-app');
+      try { localStorage.setItem(VIEW_KEY, 'overview'); } catch(e){}
+    }
+    if (!opts.silent) window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+
+  // restore previous view
+  try {
+    if (localStorage.getItem(VIEW_KEY) === 'app') {
+      setView('app', { silent: true });
+    }
+  } catch(e) {}
+
+  const startBtn = document.getElementById('start-setup');
+  if (startBtn) startBtn.addEventListener('click', () => { setView('app'); setTimeout(setActive, 0); });
+
+  const backLink = document.getElementById('back-to-overview');
+  if (backLink) backLink.addEventListener('click', (e) => { e.preventDefault(); setView('overview'); });
+
+  // ============ Agent tabs (overview) ============
+  const tabs = document.querySelectorAll('.ov-tab');
+  const cards = document.querySelectorAll('.ov-card');
+  const stage = document.getElementById('ov-stage');
+  const glyph = document.getElementById('ov-glyph');
+  const accentVar = { waz: 'var(--waz)', maky: 'var(--maky)', fin: 'var(--fin)' };
+  const glyphMap = { waz: 'W', maky: 'M', fin: 'F' };
+
+  tabs.forEach(t => {
+    t.addEventListener('click', () => {
+      const agent = t.dataset.agent;
+      tabs.forEach(x => {
+        const active = x === t;
+        x.classList.toggle('active', active);
+        x.setAttribute('aria-selected', String(active));
+      });
+      cards.forEach(c => c.classList.toggle('active', c.dataset.card === agent));
+      if (stage) stage.style.setProperty('--accent', accentVar[agent]);
+      if (glyph) glyph.textContent = glyphMap[agent];
+    });
+  });
+
+  // ============ Setup progress (localStorage) ============
+  const STORAGE_KEY = 'squad-playbook-confeitarias-v2';
+  const taskInputs = document.querySelectorAll('[data-task]');
+  const totalEl = document.getElementById('prog-total');
+  const doneEl = document.getElementById('prog-done');
+  const pctEl = document.getElementById('prog-pct');
+  const fillEl = document.getElementById('prog-fill');
+  const fillMobile = document.getElementById('prog-fill-m');
+  if (totalEl) totalEl.textContent = taskInputs.length;
+
+  function loadState() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+    catch(e) { return {}; }
+  }
+  function saveState(state) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+    catch(e) {}
+  }
+
+  function updateProgress() {
+    const checked = [...taskInputs].filter(t => t.checked).length;
+    const pct = taskInputs.length ? Math.round((checked / taskInputs.length) * 100) : 0;
+    if (doneEl) doneEl.textContent = checked;
+    if (pctEl) pctEl.textContent = pct + '%';
+    if (fillEl) fillEl.style.width = pct + '%';
+    if (fillMobile) fillMobile.style.width = pct + '%';
+  }
+
+  const stateLoaded = loadState();
+  taskInputs.forEach(t => {
+    if (stateLoaded[t.id]) t.checked = true;
+    t.addEventListener('change', () => {
+      const s = loadState();
+      if (t.checked) s[t.id] = true;
+      else delete s[t.id];
+      saveState(s);
+      updateProgress();
+    });
+  });
+  updateProgress();
+
+  // ============ Sidebar active state on scroll ============
+  const navLinks = document.querySelectorAll('.sidebar .nav-link');
+  const sections = [...document.querySelectorAll('.doc .section')];
+
+  function setActive() {
+    const y = window.scrollY + 120;
+    let current = sections[0];
+    for (const s of sections) { if (s.offsetTop <= y) current = s; }
+    navLinks.forEach(a => {
+      const id = a.getAttribute('href').slice(1);
+      a.classList.toggle('active', current && current.id === id);
+    });
+  }
+  setActive();
+  window.addEventListener('scroll', setActive, { passive: true });
+  window.addEventListener('resize', setActive);
+
+  // ============ Mobile dropdown nav ============
+  const mobileNav = document.getElementById('mobile-nav');
+  if (mobileNav) {
+    mobileNav.addEventListener('change', () => {
+      const el = document.querySelector(mobileNav.value);
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.scrollY - 70;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  }
+
+  // ============ Smooth-scroll offset for in-page anchors ============
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (ev) => {
+      const id = a.getAttribute('href').slice(1);
+      if (!id) return;
+      const el = document.getElementById(id);
+      if (!el) return;
+      ev.preventDefault();
+      const isMobile = window.matchMedia('(max-width: 900px)').matches;
+      const offset = isMobile ? 70 : 12;
+      const top = el.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    });
+  });
+</script>
+
+</body>
+</html>
