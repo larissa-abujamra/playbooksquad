@@ -733,6 +733,73 @@
     .task-row.with-phone .phone { margin-top: 0; }
   }
 
+  /* Phone toggle button: oculto no desktop por padrão */
+  .phone-toggle { display: none; }
+
+  /* Brand (logo) hover */
+  .brand { transition: opacity .15s ease; }
+  .brand:hover { opacity: .7; }
+
+  /* ---------- Mobile: phone mockup escondido com toggle ---------- */
+  @media (max-width: 900px) {
+    .task-row.with-phone {
+      grid-template-columns: auto 1fr;
+    }
+    .task-row.with-phone .task-phone-wrap {
+      display: none;
+    }
+    .task-row.with-phone.phone-visible {
+      grid-template-rows: auto auto;
+    }
+    .task-row.with-phone.phone-visible .task-phone-wrap {
+      display: flex;
+      grid-column: 1 / -1;
+      justify-content: center;
+      margin-top: 14px;
+      animation: phoneSlideDown .3s ease both;
+    }
+    .task-row.with-phone.phone-visible .phone {
+      width: 180px;
+      max-width: 60vw;
+      margin-top: 0;
+    }
+    @keyframes phoneSlideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .phone-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--ink-3);
+      background: none;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 5px 10px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: color .2s ease, border-color .2s ease;
+    }
+    .phone-toggle:hover {
+      color: var(--ink-2);
+      border-color: var(--ink-3);
+    }
+    .phone-toggle .toggle-icon {
+      width: 14px; height: 14px;
+      transition: transform .2s ease;
+    }
+    .phone-toggle.is-open {
+      color: var(--ink-2);
+      border-color: var(--ink-3);
+    }
+    .phone-toggle.is-open .toggle-icon {
+      transform: rotate(180deg);
+    }
+  }
+
   /* ============ Overview screen ============ */
   body.in-app .overview { display: none; }
   body:not(.in-app) .app { display: none; }
@@ -2263,6 +2330,17 @@
   const backLink = document.getElementById('back-to-overview');
   if (backLink) backLink.addEventListener('click', (e) => { e.preventDefault(); setView('overview'); });
 
+  // ============ Logo (.brand) → volta pra overview quando em app ============
+  document.querySelectorAll('.brand').forEach(logo => {
+    logo.addEventListener('click', (e) => {
+      if (document.body.classList.contains('in-app')) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        setView('overview');
+      }
+    });
+  });
+
   // ============ Setup progress (localStorage) ============
   const STORAGE_KEY = 'squad-playbook-confeitarias-v2';
   const taskInputs = document.querySelectorAll('[data-task]');
@@ -2634,6 +2712,24 @@
     }, { threshold: 0.2 });
     explorerIO.observe(explorer);
   }
+
+  // ============ Mobile phone toggle (injetado em cada .task-row.with-phone) ============
+  document.querySelectorAll('.task-row.with-phone .task-main').forEach(taskMain => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'phone-toggle';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.innerHTML = '<svg class="toggle-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="4" y="2" width="8" height="12" rx="1.5" stroke="currentColor" stroke-width="1.3"/><circle cx="8" cy="12" r="0.7" fill="currentColor"/></svg><span class="toggle-text">Ver tela de exemplo</span>';
+    taskMain.appendChild(btn);
+    btn.addEventListener('click', () => {
+      const taskRow = btn.closest('.task-row');
+      const isOpen = taskRow.classList.toggle('phone-visible');
+      btn.classList.toggle('is-open', isOpen);
+      btn.setAttribute('aria-expanded', String(isOpen));
+      const textEl = btn.querySelector('.toggle-text');
+      if (textEl) textEl.textContent = isOpen ? 'Esconder tela' : 'Ver tela de exemplo';
+    });
+  });
 </script>
 
 </body>
