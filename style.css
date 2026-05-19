@@ -475,6 +475,8 @@
     align-items: center;
     text-align: center;
   }
+  #stage-3,
+  #stage-4 { border-top: 1px solid var(--line); }
   .stage-num {
     font-family: 'DM Mono', monospace;
     font-size: 12px; letter-spacing: .08em; color: var(--ink-3);
