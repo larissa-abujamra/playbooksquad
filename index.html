@@ -22,7 +22,7 @@
     --waz:  #2DB67D;
     --fin:  #2563EB;
 
-    --sidebar-w: 248px;
+    --sidebar-w: 280px;
     --content-max: 720px;
     --r: 12px;
   }
@@ -82,20 +82,22 @@
     color: var(--ink-3); margin-bottom: 22px;
   }
   .sidebar .label {
-    padding: 0 10px;
+    padding: 0 12px;
     font-family: 'DM Mono', monospace;
     font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
-    color: var(--ink-3); margin: 14px 0 6px;
+    color: var(--ink-3); font-weight: 500;
+    margin: 20px 0 8px;
   }
   .nav-link {
     display: flex; align-items: center; gap: 10px;
-    padding: 8px 10px;
+    padding: 10px 12px;
     border-radius: 8px;
     text-decoration: none; color: var(--ink-2);
     font-size: 14px; font-weight: 500;
     line-height: 1.4;
     border-left: 2px solid transparent;
     margin-left: -2px;
+    transition: color .15s ease, background .15s ease, border-color .15s ease;
   }
   .nav-link .ico {
     width: 18px; height: 18px; display: inline-flex;
@@ -108,9 +110,14 @@
     border-left-color: var(--ink);
   }
   .nav-link.active .ico { color: var(--ink); }
-  .nav-link.featured { font-weight: 600; color: var(--ink); }
+  .nav-link.featured { font-weight: 600; color: var(--ink); font-size: 14px; }
+  .nav-link.featured.active {
+    border-left-width: 3px;
+    margin-left: -3px;
+  }
 
   /* ---------- Nav group (sub-navegação de etapas) ---------- */
+  .nav-group { margin-bottom: 8px; }
   .nav-group .nav-link.featured {
     display: flex; align-items: center; gap: 10px;
   }
@@ -121,48 +128,50 @@
     color: var(--ink-3);
     letter-spacing: .04em;
     font-weight: 400;
+    transition: color .2s ease, font-weight .2s ease;
+  }
+  .nav-group.all-complete .nav-group-count {
+    color: var(--waz);
+    font-weight: 600;
   }
   .nav-subs {
     display: flex;
     flex-direction: column;
-    gap: 0;
-    padding-left: 38px;
+    gap: 2px;
+    padding-left: 34px;
+    padding-top: 4px;
+    padding-bottom: 4px;
     margin-top: 2px;
-    margin-bottom: 4px;
   }
   .nav-sub {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 6px 10px;
+    gap: 8px;
+    padding: 8px 10px 8px 12px;
     border-radius: 6px;
     text-decoration: none;
     font-size: 13px;
     font-weight: 400;
     color: var(--ink-3);
-    line-height: 1.4;
-    transition: color .2s ease, background .2s ease, opacity .2s ease;
+    line-height: 1.35;
+    transition: color .15s ease, background .15s ease, border-color .15s ease, opacity .15s ease;
     border-left: 2px solid transparent;
     margin-left: -2px;
   }
-  .nav-sub:hover {
-    color: var(--ink-2);
-    background: var(--bg-2);
-  }
+  .nav-sub:hover { color: var(--ink-2); }
   .nav-sub-status {
-    width: 8px; height: 8px;
+    width: 7px; height: 7px;
     border-radius: 50%;
     flex-shrink: 0;
-    transition: background .3s ease, border-color .3s ease, box-shadow .3s ease;
+    transition: background .2s ease, border-color .2s ease;
   }
   .nav-sub-status[data-status="empty"] {
     background: transparent;
-    border: 1.5px solid var(--line);
+    border: 1.5px solid #C4C9D1;
   }
   .nav-sub-status[data-status="active"] {
-    background: transparent;
+    background: var(--ink-2);
     border: 1.5px solid var(--ink-2);
-    box-shadow: inset 0 0 0 1.5px var(--ink-2);
   }
   .nav-sub-status[data-status="done"] {
     background: var(--waz);
@@ -177,9 +186,8 @@
   .nav-sub-name {
     flex: 1;
     min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: normal;
+    line-height: 1.35;
   }
   .nav-sub-count {
     font-family: 'DM Mono', monospace;
@@ -187,15 +195,16 @@
     color: var(--ink-3);
     letter-spacing: .04em;
     flex-shrink: 0;
+    opacity: .7;
   }
   .nav-sub.is-viewing {
     color: var(--ink);
     font-weight: 500;
     border-left-color: var(--ink);
-    background: var(--bg-2);
+    background: transparent;
   }
   .nav-sub.is-complete { color: var(--ink-2); }
-  .nav-sub.is-complete .nav-sub-count { color: var(--waz); }
+  .nav-sub.is-complete .nav-sub-count { color: var(--waz); opacity: 1; }
   .nav-sub[data-nav-stage="2"].is-complete .nav-sub-count { color: var(--fin); }
   .nav-sub[data-nav-stage="3"].is-complete .nav-sub-count { color: var(--maky); }
   .nav-sub.has-progress { color: var(--ink-2); }
@@ -2498,6 +2507,9 @@
       });
 
       if (navTotalEl) navTotalEl.textContent = globalDone + '/13';
+
+      const navGroup = document.getElementById('nav-setup-group');
+      if (navGroup) navGroup.classList.toggle('all-complete', globalDone === 13);
     }
 
     taskInputs.forEach(t => t.addEventListener('change', updateSidebarNav));
