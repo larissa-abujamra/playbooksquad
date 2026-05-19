@@ -567,6 +567,20 @@
     wizardSkipBtn.style.visibility = wizardState.completed ? 'hidden' : 'visible';
   }
 
+  function hasAnswer(q) {
+    const ans = wizardState.answers[q.key];
+    if (q.type === 'multi-choice') return Array.isArray(ans) && ans.length > 0;
+    if (q.type === 'single-choice' || q.type === 'choice-with-followup') return !!ans;
+    return typeof ans === 'string' && ans.trim().length > 0;
+  }
+  function updateNextButton() {
+    const nextBtn = document.getElementById('wizard-next');
+    if (!nextBtn) return;
+    const q = wizardQuestions[wizardState.currentIndex];
+    if (!q) return;
+    nextBtn.disabled = !hasAnswer(q);
+  }
+
   function renderQuestion(index, direction) {
     direction = direction || 'forward';
     const leavingClass = direction === 'back' ? 'is-leaving-back' : 'is-leaving-forward';
@@ -646,10 +660,13 @@
             '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M9 3l-4 4 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
             'Voltar' +
           '</button>' +
-          '<button class="wizard-next" type="button" id="wizard-next">' +
-            (index === wizardQuestions.length - 1 ? 'Finalizar' : 'Próximo') +
-            '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
-          '</button>' +
+          '<div class="wizard-actions-right">' +
+            '<button class="wizard-next-skip" type="button">Pular</button>' +
+            '<button class="wizard-next" type="button" id="wizard-next" disabled>' +
+              (index === wizardQuestions.length - 1 ? 'Finalizar' : 'Próximo') +
+              '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+            '</button>' +
+          '</div>' +
         '</div>';
 
       wizardCard.classList.remove('is-leaving-forward', 'is-leaving-back');
@@ -662,6 +679,7 @@
         input.addEventListener('input', () => {
           wizardState.answers[q.key] = input.value.trim();
           wizardSave();
+          updateNextButton();
           if (q.type === 'textarea') {
             input.style.height = 'auto';
             input.style.height = Math.min(input.scrollHeight, 180) + 'px';
@@ -730,6 +748,7 @@
             }
           }
           wizardSave();
+          updateNextButton();
         });
       });
 
@@ -762,10 +781,13 @@
 
       document.getElementById('wizard-next').addEventListener('click', advance);
       document.getElementById('wizard-back').addEventListener('click', goBack);
+      const inlineSkip = wizardCard.querySelector('.wizard-next-skip');
+      if (inlineSkip) inlineSkip.addEventListener('click', skip);
 
       wizardState.currentIndex = index;
       wizardSave();
       updateWizardProgress();
+      updateNextButton();
     };
 
     if (wizardCard.children.length) {
