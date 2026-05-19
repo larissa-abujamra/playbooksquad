@@ -1824,7 +1824,12 @@
     position: fixed;
     inset: 0;
     z-index: 1000;
-    background: var(--bg);
+    background:
+      radial-gradient(ellipse 55% 45% at 5% 8%, rgba(233, 30, 140, 0.08) 0%, transparent 65%),
+      radial-gradient(ellipse 45% 50% at 95% 90%, rgba(37, 99, 235, 0.07) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 40% at 90% 20%, rgba(45, 182, 125, 0.06) 0%, transparent 65%),
+      radial-gradient(ellipse 38% 42% at 10% 95%, rgba(139, 92, 246, 0.05) 0%, transparent 65%),
+      var(--bg);
     display: none;
     flex-direction: column;
     overflow: hidden;
