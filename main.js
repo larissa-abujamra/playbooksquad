@@ -84,7 +84,7 @@
   if (tracker) {
     const stages = [
       { id: 1, tasks: ['t-1-1','t-1-2','t-1-3'] },
-      { id: 2, tasks: ['t-2-1','t-2-2','t-2-3'] },
+      { id: 2, tasks: ['t-2-3'] },
       { id: 3, tasks: ['t-3-1','t-3-2','t-3-3','t-3-4'] },
       { id: 4, tasks: ['t-4-1','t-4-2','t-4-3'] },
     ];
@@ -226,7 +226,7 @@
   if (subNavEls.length) {
     const navStages = [
       { id: 1, tasks: ['t-1-1','t-1-2','t-1-3'] },
-      { id: 2, tasks: ['t-2-1','t-2-2','t-2-3'] },
+      { id: 2, tasks: ['t-2-3'] },
       { id: 3, tasks: ['t-3-1','t-3-2','t-3-3','t-3-4'] },
       { id: 4, tasks: ['t-4-1','t-4-2','t-4-3'] },
     ];
@@ -281,7 +281,7 @@
         }
       });
 
-      if (navTotalEl) navTotalEl.textContent = globalDone + '/13';
+      if (navTotalEl) navTotalEl.textContent = globalDone + '/11';
 
       const navGroup = document.getElementById('nav-setup-group');
       if (navGroup) navGroup.classList.toggle('all-complete', globalDone === 13);
@@ -885,14 +885,7 @@
       });
     });
 
-    // Auto-check stage 2 tasks (the wizard does the work)
-    ['t-2-1', 't-2-2'].forEach(id => {
-      const cb = document.getElementById(id);
-      if (cb && !cb.checked) {
-        cb.checked = true;
-        cb.dispatchEvent(new Event('change'));
-      }
-    });
+    // (Auto-check de t-2-3 acontece no downloadPDF — quando o usuário baixa o PDF)
 
     updateWizardProgress();
   }

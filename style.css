@@ -2506,6 +2506,10 @@
 
   /* ---------- Glow Button (CTA de máximo destaque) ---------- */
   .btn-glow {
+    appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    font: inherit;
     position: relative;
     display: inline-flex;
     align-items: center;
