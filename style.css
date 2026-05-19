@@ -585,9 +585,9 @@
   }
 
   /* iPhone mockup */
-  .phone {
+  .phone { 
     position: relative;
-    width: 200px;
+    width: 201px;
     aspect-ratio: 9 / 19.5;
     border-radius: 36px;
     background: #111;
