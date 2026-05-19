@@ -1541,12 +1541,417 @@
     .confetti-piece { display: none; }
   }
 
+  /* ---------- Stage CTA (Treinar meu novo time) ---------- */
+  .stage-cta {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--bg);
+    padding: 24px 26px;
+    margin-top: 14px;
+    overflow: hidden;
+  }
+  .stage-cta-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(60% 80% at 0% 0%, color-mix(in oklab, var(--maky) 8%, transparent), transparent 60%),
+      radial-gradient(60% 80% at 100% 100%, color-mix(in oklab, var(--fin) 8%, transparent), transparent 60%);
+  }
+  .stage-cta-content { position: relative; }
+  .stage-cta-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 6px;
+  }
+  .stage-cta-title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 0 0 8px;
+  }
+  .stage-cta-desc {
+    color: var(--ink-2);
+    font-size: 14.5px;
+    line-height: 1.55;
+    max-width: 56ch;
+    margin: 0 0 18px;
+  }
+  .stage-cta-btn {
+    appearance: none; -webkit-appearance: none;
+    background: var(--ink);
+    color: #fff;
+    border: 1px solid var(--ink);
+    padding: 12px 22px;
+    border-radius: 10px;
+    font: inherit;
+    font-size: 14.5px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 10px;
+    cursor: pointer;
+    transition: transform .15s ease, background .2s ease, box-shadow .2s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06);
+  }
+  .stage-cta-btn:hover {
+    background: #000;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0,0,0,.12);
+  }
+  .stage-cta-btn:hover svg { transform: translateX(2px); }
+  .stage-cta-btn svg { transition: transform .15s ease; }
+  .stage-cta-meta {
+    margin-top: 14px;
+    display: flex; flex-wrap: wrap; gap: 6px 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: .04em;
+  }
+  .stage-cta-meta b { color: var(--ink-2); font-weight: 500; }
+
+  /* ---------- Wizard (treinamento guiado, full-screen overlay) ---------- */
+  .wizard {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: var(--bg);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  body.in-wizard { overflow: hidden; }
+  body.in-wizard .wizard { display: flex; animation: wizardIn .35s cubic-bezier(0.16, 1, 0.3, 1); }
+  @keyframes wizardIn {
+    from { opacity: 0; transform: scale(.985); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .wizard-header {
+    display: grid;
+    grid-template-columns: 40px 1fr 80px;
+    align-items: center;
+    gap: 20px;
+    padding: 20px clamp(20px, 5vw, 56px);
+    border-bottom: 1px solid var(--line);
+    background: rgba(255,255,255,.85);
+    backdrop-filter: saturate(140%) blur(10px);
+    flex-shrink: 0;
+  }
+  .wizard-close {
+    appearance: none; background: none; border: none;
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--ink-2);
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+  }
+  .wizard-close:hover { background: var(--bg-2); color: var(--ink); }
+  .wizard-close svg { width: 16px; height: 16px; }
+
+  .wizard-progress {
+    display: flex; align-items: center; gap: 12px;
+    max-width: 480px; margin: 0 auto; width: 100%;
+  }
+  .wizard-progress-track {
+    flex: 1;
+    height: 3px;
+    background: var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .wizard-progress-fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--maky), var(--waz) 50%, var(--fin));
+    border-radius: 999px;
+    transition: width .4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .wizard-progress-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-3);
+    letter-spacing: .04em;
+    white-space: nowrap;
+  }
+
+  .wizard-skip {
+    appearance: none; background: none; border: none;
+    font: inherit; font-size: 13px; font-weight: 500;
+    color: var(--ink-3);
+    cursor: pointer;
+    justify-self: end;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: color .15s ease, background .15s ease;
+  }
+  .wizard-skip:hover { color: var(--ink-2); background: var(--bg-2); }
+
+  .wizard-stage {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(24px, 6vh, 56px) clamp(20px, 5vw, 56px);
+    overflow-y: auto;
+  }
+  .wizard-card {
+    width: 100%;
+    max-width: 620px;
+    transition: opacity .25s ease, transform .25s ease;
+  }
+  .wizard-card.is-leaving-forward { opacity: 0; transform: translateY(-10px); }
+  .wizard-card.is-leaving-back { opacity: 0; transform: translateY(10px); }
+  .wizard-card.is-entering-forward {
+    animation: wizardSlideForward .35s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .wizard-card.is-entering-back {
+    animation: wizardSlideBack .35s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes wizardSlideForward {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes wizardSlideBack {
+    from { opacity: 0; transform: translateY(-14px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .wizard-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 18px;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .wizard-eyebrow::before {
+    content: ""; width: 18px; height: 1px; background: var(--ink-3);
+  }
+
+  .wizard-q {
+    font-size: clamp(24px, 3.4vw, 34px);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 0 0 12px;
+  }
+  .wizard-hint {
+    font-size: 15px;
+    color: var(--ink-2);
+    line-height: 1.5;
+    margin: 0 0 28px;
+    max-width: 56ch;
+  }
+
+  .wizard-input,
+  .wizard-textarea {
+    width: 100%;
+    font: inherit;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ink);
+    background: var(--bg);
+    border: none;
+    border-bottom: 2px solid var(--line);
+    padding: 14px 0;
+    outline: none;
+    transition: border-color .2s ease;
+    resize: none;
+  }
+  .wizard-input::placeholder,
+  .wizard-textarea::placeholder { color: var(--ink-3); }
+  .wizard-input:focus,
+  .wizard-textarea:focus { border-bottom-color: var(--ink); }
+  .wizard-textarea {
+    min-height: 56px;
+    max-height: 180px;
+    overflow-y: auto;
+    font-family: inherit;
+  }
+
+  .wizard-actions {
+    margin-top: 32px;
+    display: flex; align-items: center; gap: 12px;
+    flex-wrap: wrap;
+  }
+  .wizard-back {
+    appearance: none;
+    background: var(--bg);
+    color: var(--ink-2);
+    border: 1px solid var(--line);
+    padding: 12px 18px;
+    border-radius: 10px;
+    font: inherit; font-size: 14px; font-weight: 500;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .wizard-back:hover {
+    background: var(--bg-2);
+    color: var(--ink);
+    border-color: var(--ink-3);
+  }
+  .wizard-back[disabled] { opacity: .35; cursor: not-allowed; }
+  .wizard-next {
+    appearance: none;
+    background: var(--ink);
+    color: #fff;
+    border: 1px solid var(--ink);
+    padding: 12px 22px;
+    border-radius: 10px;
+    font: inherit; font-size: 14px; font-weight: 600;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: background .2s ease, transform .15s ease, box-shadow .2s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06);
+    margin-left: auto;
+  }
+  .wizard-next:hover {
+    background: #000;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0,0,0,.12);
+  }
+  .wizard-next:hover svg { transform: translateX(2px); }
+  .wizard-next svg { transition: transform .15s ease; }
+  .wizard-kbd {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: .04em;
+    margin-left: 4px;
+  }
+
+  /* Completion screen */
+  .wizard-done { text-align: left; }
+  .wizard-done-mark {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--maky), var(--waz) 50%, var(--fin));
+    color: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-bottom: 22px;
+  }
+  .wizard-done-mark svg { width: 24px; height: 24px; }
+  .wizard-done h1 {
+    font-size: clamp(28px, 4vw, 38px);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    margin: 0 0 12px;
+  }
+  .wizard-done-sub {
+    font-size: 17px;
+    color: var(--ink-2);
+    line-height: 1.55;
+    margin: 0 0 28px;
+    max-width: 52ch;
+  }
+  .wizard-summary {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--bg-2);
+    padding: 18px 20px;
+    margin-bottom: 26px;
+    max-height: 280px;
+    overflow-y: auto;
+  }
+  .wizard-summary-block { padding: 8px 0; }
+  .wizard-summary-block + .wizard-summary-block { border-top: 1px solid var(--line); }
+  .wizard-summary-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 8px;
+  }
+  .wizard-summary-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 14px;
+    padding: 6px 0;
+    font-size: 13.5px;
+  }
+  .wizard-summary-row .q { color: var(--ink-2); }
+  .wizard-summary-row .a { color: var(--ink); font-weight: 500; text-align: right; max-width: 60%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .wizard-summary-row .a.empty { color: var(--ink-3); font-style: italic; font-weight: 400; }
+  .wizard-summary-row .edit {
+    background: none; border: none; padding: 0 0 0 8px;
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    color: var(--ink-3); cursor: pointer;
+  }
+  .wizard-summary-row .edit:hover { color: var(--ink); }
+
+  .wizard-done-actions {
+    display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+  }
+  .wizard-download {
+    appearance: none;
+    background: var(--ink); color: #fff;
+    border: 1px solid var(--ink);
+    padding: 14px 24px;
+    border-radius: 10px;
+    font: inherit; font-size: 15px; font-weight: 600;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 10px;
+    transition: background .2s ease, transform .15s ease, box-shadow .2s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06);
+  }
+  .wizard-download:hover {
+    background: #000;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0,0,0,.12);
+  }
+  .wizard-download svg { width: 16px; height: 16px; }
+  .wizard-review {
+    appearance: none;
+    background: transparent;
+    color: var(--ink-2);
+    border: 1px solid var(--line);
+    padding: 14px 20px;
+    border-radius: 10px;
+    font: inherit; font-size: 14px; font-weight: 500;
+    cursor: pointer;
+    transition: color .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .wizard-review:hover { color: var(--ink); border-color: var(--ink-3); background: var(--bg-2); }
+  .wizard-done-aux {
+    margin-top: 18px;
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.5;
+    max-width: 52ch;
+  }
+  .wizard-done-aux b { color: var(--ink); font-weight: 600; }
+
+  @media (max-width: 640px) {
+    .wizard-header {
+      grid-template-columns: 36px 1fr 60px;
+      gap: 10px;
+      padding: 14px 16px;
+    }
+    .wizard-progress-text { font-size: 11px; }
+    .wizard-actions { flex-direction: column-reverse; align-items: stretch; }
+    .wizard-next, .wizard-back { width: 100%; justify-content: center; }
+    .wizard-next { margin-left: 0; }
+    .wizard-summary-row { grid-template-columns: 1fr; }
+    .wizard-summary-row .a { text-align: left; max-width: 100%; }
+  }
+
   /* Print friendliness */
   @media print {
     .sidebar, .mobile-header { display: none; }
     .content { padding: 0; }
   }
 </style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 
@@ -1942,51 +2347,18 @@
             </span>
           </div>
 
-          <div class="check-block">
-            <div class="task">
-              <div class="task-row">
-                <input type="checkbox" class="checkbox" id="t-2-1" data-task />
-                <div class="task-main">
-                  <label class="task-text" for="t-2-1">Responda as perguntas sobre seu negócio</label>
-                  <button class="details-toggle" aria-expanded="false" aria-controls="d-2-1"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-                  <div class="details" id="d-2-1">
-                    <div class="details-inner">
-                      <p>Vamos te fazer algumas perguntas sobre sua confeitaria pra que os agentes entendam como você trabalha. Coisas como:</p>
-                      <ul class="examples">
-                        <li>O que você vende e o que é mais pedido?</li>
-                        <li>Qual seu horário de funcionamento?</li>
-                        <li>Você faz entrega? Pra quais regiões?</li>
-                        <li>Qual o prazo mínimo pra encomendas?</li>
-                        <li>Tem algum produto que você não faz? (ex: sem glúten, sem lactose)</li>
-                      </ul>
-                      <p style="margin-top: 8px;">Suas respostas vão virar um documento com o perfil completo do seu negócio.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div class="stage-cta" id="train-team-cta">
+            <div class="stage-cta-glow" aria-hidden="true"></div>
+            <div class="stage-cta-content">
+              <div class="stage-cta-eyebrow">Treinamento guiado</div>
+              <h3 class="stage-cta-title">Treinar meu novo time</h3>
+              <p class="stage-cta-desc">Em poucas perguntas a gente monta o perfil completo do seu negócio. No final, geramos um PDF pronto pra você enviar pro Waz — e os 3 agentes aprendem juntos.</p>
+              <button class="stage-cta-btn" type="button" id="start-wizard-btn">
+                Começar
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
             </div>
-
-            <div class="task">
-              <div class="task-row">
-                <input type="checkbox" class="checkbox" id="t-2-2" data-task />
-                <div class="task-main">
-                  <label class="task-text" for="t-2-2">Defina como você quer que o Waz atenda</label>
-                  <button class="details-toggle" aria-expanded="false" aria-controls="d-2-2"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-                  <div class="details" id="d-2-2">
-                    <div class="details-inner">
-                      <p>Agora, a parte divertida — diga como você quer que o Waz converse com suas clientes. Pense em como <strong>você</strong> responderia e descreva:</p>
-                      <ul class="examples">
-                        <li>"Quero que seja carinhoso e próximo, use emojis 🎂💕"</li>
-                        <li>"Chame a cliente pelo nome sempre"</li>
-                        <li>"Seja educada mas objetiva, sem enrolação"</li>
-                        <li>"Use 'a gente' ao invés de 'nós'"</li>
-                      </ul>
-                      <p style="margin-top: 8px;">💡 <strong>Dica:</strong> pense nas 10 perguntas que suas clientes mais fazem no WhatsApp. Se você incluir essas respostas, o Waz já vai saber responder sozinho.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          </div>
 
             <div class="task">
               <div class="task-row with-phone">
@@ -2283,6 +2655,23 @@
       </section>
 
     </div>
+  </main>
+</div>
+
+<!-- ============ WIZARD (treinamento guiado de agentes) ============ -->
+<div class="wizard" id="wizard" role="dialog" aria-modal="true" aria-labelledby="wizard-question-text" aria-hidden="true">
+  <header class="wizard-header">
+    <button class="wizard-close" type="button" id="wizard-close" aria-label="Fechar treinamento">
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3l-5 5 5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="wizard-progress" aria-live="polite">
+      <div class="wizard-progress-track"><div class="wizard-progress-fill" id="wizard-progress-fill"></div></div>
+      <span class="wizard-progress-text" id="wizard-progress-text">1 de 19</span>
+    </div>
+    <button class="wizard-skip" type="button" id="wizard-skip">Pular</button>
+  </header>
+  <main class="wizard-stage">
+    <div class="wizard-card" id="wizard-card"></div>
   </main>
 </div>
 
@@ -2715,6 +3104,376 @@
       const textEl = btn.querySelector('.toggle-text');
       if (textEl) textEl.textContent = isOpen ? 'Esconder tela' : 'Ver tela de exemplo';
     });
+  });
+
+  // ============ Wizard: treinamento guiado de agentes ============
+  const wizardQuestions = [
+    { block: 'Sobre a marca', key: 'company_name', q: 'Qual é o nome da sua empresa?', hint: 'Pode ser o nome fantasia ou razão social.', placeholder: 'Ex: Confeitaria Doce Aroma', multiline: false },
+    { block: 'Sobre a marca', key: 'brand_one_liner', q: 'Como você descreveria sua marca em uma frase?', hint: 'Imagine que você tem 10 segundos pra se apresentar.', placeholder: 'Ex: A confeitaria que faz bolos artesanais como os da vó.', multiline: true },
+    { block: 'Sobre a marca', key: 'main_differential', q: 'Qual é o principal diferencial da sua empresa?', hint: 'O que você faz melhor do que ninguém?', placeholder: 'Ex: Bolos sem corante artificial, feitos sob encomenda.', multiline: true },
+    { block: 'Sobre a marca', key: 'vs_competitors', q: 'O que torna sua empresa diferente dos concorrentes?', hint: 'Algo que as clientes percebem rápido.', placeholder: 'Ex: Atendimento que parece de amiga, não de loja.', multiline: true },
+    { block: 'Sobre a marca', key: 'values', q: 'Quais são os principais valores da marca?', hint: '3 a 5 palavras que guiam o negócio.', placeholder: 'Ex: cuidado, sabor, tradição, honestidade', multiline: true },
+    { block: 'Sobre a marca', key: 'customer_feeling', q: 'Como você quer que as clientes se sintam ao interagir com sua empresa?', hint: 'Como deve ser sair de uma conversa contigo?', placeholder: 'Ex: acolhidas, com vontade de voltar', multiline: true },
+    { block: 'Produtos & serviços', key: 'flagship', q: 'Qual é o carro-chefe da empresa?', hint: 'O produto que sustenta o negócio.', placeholder: 'Ex: Bolo de chocolate clássico', multiline: false },
+    { block: 'Produtos & serviços', key: 'top_recommendations', q: 'Quais produtos ou serviços você mais recomenda?', hint: 'Os que você sempre indica primeiro.', placeholder: 'Liste 2-3 produtos com o porquê', multiline: true },
+    { block: 'Produtos & serviços', key: 'strategic_product', q: 'Existe algum produto estratégico que deve sempre ser priorizado?', hint: 'Aquele com maior margem ou que abre porta pra outras vendas.', placeholder: 'Ex: Combo pra festas — fecha o ticket maior', multiline: true },
+    { block: 'Produtos & serviços', key: 'common_questions', q: 'Quais são as dúvidas mais comuns das clientes?', hint: 'As 5 mais frequentes ajudam muito o Waz.', placeholder: 'Ex: Vocês fazem entrega? Qual o prazo? Aceitam encomenda last minute?', multiline: true },
+    { block: 'Tom de voz', key: 'brand_voice', q: 'Como sua marca fala?', hint: 'Casual, premium, técnico, divertido…', placeholder: 'Ex: aconchegante e próxima, sem rodeios', multiline: false },
+    { block: 'Tom de voz', key: 'inspiring_brand', q: 'Existe alguma marca cuja comunicação você admira?', hint: 'Pode ser de qualquer setor.', placeholder: 'Ex: Gosto do tom da Natura, mas no nosso nicho.', multiline: true },
+    { block: 'Tom de voz', key: 'signature_phrases', q: 'Existem palavras ou frases que sua equipe sempre usa?', hint: 'Aquele "oi, queridas!" que virou assinatura.', placeholder: 'Ex: "Oi, linda!", "Manda foto que a gente vê."', multiline: true },
+    { block: 'Tom de voz', key: 'never_say', q: 'Existe algo que sua equipe nunca deve dizer?', hint: 'Tom, gírias, expressões a evitar.', placeholder: 'Ex: Nunca "fofa", evitar palavra "barato"', multiline: true },
+    { block: 'Tom de voz', key: 'attendance_style', q: 'O atendimento deve parecer mais humano, consultivo, rápido ou vendedor?', hint: 'Escolha o que combina mais com você.', placeholder: 'Ex: consultivo, parece uma amiga ouvindo', multiline: false },
+    { block: 'Operação', key: 'business_hours', q: 'Qual é o horário de atendimento?', hint: 'Inclua dias da semana se variar.', placeholder: 'Ex: Seg–Sex 9h–18h, Sáb 9h–14h', multiline: false },
+    { block: 'Operação', key: 'important_policies', q: 'Existem políticas importantes que os agentes precisam saber?', hint: 'Regras que as clientes precisam saber.', placeholder: 'Ex: Entrega só na Zona Sul, pagamento antecipado, encomenda c/ 48h.', multiline: true },
+    { block: 'Operação', key: 'limits', q: 'Existe alguma limitação que os agentes nunca devem ultrapassar?', hint: 'O que o agente NÃO pode prometer ou fazer.', placeholder: 'Ex: Não dar desconto sem sua aprovação, não confirmar entrega fora da área.', multiline: true },
+    { block: 'Operação', key: 'escalation', q: 'Quando o agente deve encaminhar pra você falar pessoalmente?', hint: 'Os casos onde você quer entrar na conversa.', placeholder: 'Ex: Reclamações, pedidos acima de R$ 500, dúvidas sobre cardápio especial.', multiline: true },
+  ];
+
+  const WIZARD_STORAGE_KEY = 'squad-wizard-answers-v1';
+  const wizard = document.getElementById('wizard');
+  const wizardCard = document.getElementById('wizard-card');
+  const wizardFill = document.getElementById('wizard-progress-fill');
+  const wizardProgressText = document.getElementById('wizard-progress-text');
+  const wizardCloseBtn = document.getElementById('wizard-close');
+  const wizardSkipBtn = document.getElementById('wizard-skip');
+  const startWizardBtn = document.getElementById('start-wizard-btn');
+
+  const wizardState = {
+    answers: {},
+    currentIndex: 0,
+    completed: false,
+  };
+
+  function wizardLoad() {
+    try {
+      const raw = localStorage.getItem(WIZARD_STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        wizardState.answers = parsed.answers || {};
+        wizardState.currentIndex = Math.min(parsed.currentIndex || 0, wizardQuestions.length);
+        wizardState.completed = !!parsed.completed;
+      }
+    } catch (e) {}
+  }
+  function wizardSave() {
+    try {
+      localStorage.setItem(WIZARD_STORAGE_KEY, JSON.stringify(wizardState));
+    } catch (e) {}
+  }
+
+  function wizardOpen() {
+    wizardLoad();
+    if (wizardState.completed) {
+      renderDone(true);
+    } else {
+      renderQuestion(wizardState.currentIndex, 'forward');
+    }
+    document.body.classList.add('in-wizard');
+    wizard.setAttribute('aria-hidden', 'false');
+    setTimeout(() => {
+      const input = wizardCard.querySelector('.wizard-input, .wizard-textarea');
+      if (input) input.focus();
+    }, 350);
+  }
+  function wizardClose() {
+    document.body.classList.remove('in-wizard');
+    wizard.setAttribute('aria-hidden', 'true');
+  }
+
+  function updateWizardProgress() {
+    const total = wizardQuestions.length;
+    const current = Math.min(wizardState.currentIndex + 1, total);
+    const pct = wizardState.completed ? 100 : Math.round((current - 1) / total * 100);
+    wizardFill.style.width = pct + '%';
+    wizardProgressText.textContent = wizardState.completed ? 'Concluído' : current + ' de ' + total;
+    wizardSkipBtn.style.visibility = wizardState.completed ? 'hidden' : 'visible';
+  }
+
+  function renderQuestion(index, direction) {
+    direction = direction || 'forward';
+    const leavingClass = direction === 'back' ? 'is-leaving-back' : 'is-leaving-forward';
+    const enteringClass = direction === 'back' ? 'is-entering-back' : 'is-entering-forward';
+
+    const buildAndShow = () => {
+      const q = wizardQuestions[index];
+      const value = (wizardState.answers[q.key] || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      const inputHtml = q.multiline
+        ? '<textarea class="wizard-textarea" id="wizard-current-input" placeholder="' + q.placeholder.replace(/"/g, '&quot;') + '" rows="2">' + value + '</textarea>'
+        : '<input type="text" class="wizard-input" id="wizard-current-input" placeholder="' + q.placeholder.replace(/"/g, '&quot;') + '" value="' + value + '" />';
+
+      wizardCard.innerHTML =
+        '<div class="wizard-eyebrow">' + q.block + '</div>' +
+        '<h1 class="wizard-q" id="wizard-question-text">' + q.q + '</h1>' +
+        '<p class="wizard-hint">' + q.hint + '</p>' +
+        inputHtml +
+        '<div class="wizard-actions">' +
+          '<button class="wizard-back" type="button" id="wizard-back"' + (index === 0 ? ' disabled' : '') + '>' +
+            '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M9 3l-4 4 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+            'Voltar' +
+          '</button>' +
+          '<button class="wizard-next" type="button" id="wizard-next">' +
+            (index === wizardQuestions.length - 1 ? 'Finalizar' : 'Próximo') +
+            '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+            '<span class="wizard-kbd">↵</span>' +
+          '</button>' +
+        '</div>';
+
+      wizardCard.classList.remove('is-leaving-forward', 'is-leaving-back');
+      wizardCard.classList.add(enteringClass);
+      setTimeout(() => wizardCard.classList.remove(enteringClass), 360);
+
+      const input = document.getElementById('wizard-current-input');
+      if (input) {
+        input.addEventListener('input', () => {
+          wizardState.answers[q.key] = input.value.trim();
+          wizardSave();
+          if (q.multiline) {
+            input.style.height = 'auto';
+            input.style.height = Math.min(input.scrollHeight, 180) + 'px';
+          }
+        });
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' && (!q.multiline || (e.metaKey || e.ctrlKey))) {
+            e.preventDefault();
+            advance();
+          }
+        });
+        if (q.multiline && input.value) {
+          input.style.height = 'auto';
+          input.style.height = Math.min(input.scrollHeight, 180) + 'px';
+        }
+        setTimeout(() => input.focus(), 50);
+      }
+      document.getElementById('wizard-next').addEventListener('click', advance);
+      document.getElementById('wizard-back').addEventListener('click', goBack);
+
+      wizardState.currentIndex = index;
+      wizardSave();
+      updateWizardProgress();
+    };
+
+    if (wizardCard.children.length) {
+      wizardCard.classList.add(leavingClass);
+      setTimeout(buildAndShow, 220);
+    } else {
+      buildAndShow();
+    }
+  }
+
+  function advance() {
+    const idx = wizardState.currentIndex;
+    if (idx >= wizardQuestions.length - 1) {
+      wizardState.completed = true;
+      wizardSave();
+      renderDone(false);
+    } else {
+      renderQuestion(idx + 1, 'forward');
+    }
+  }
+  function goBack() {
+    const idx = wizardState.currentIndex;
+    if (idx <= 0) return;
+    renderQuestion(idx - 1, 'back');
+  }
+  function skip() {
+    if (wizardState.completed) return;
+    advance();
+  }
+
+  function renderDone(isResume) {
+    wizardCard.classList.remove('is-leaving-forward', 'is-leaving-back');
+    const direction = isResume ? 'forward' : 'forward';
+    wizardCard.classList.add('is-entering-' + direction);
+    setTimeout(() => wizardCard.classList.remove('is-entering-' + direction), 360);
+
+    // Build summary grouped by block
+    const blocks = [];
+    const blockMap = {};
+    wizardQuestions.forEach(q => {
+      if (!blockMap[q.block]) {
+        blockMap[q.block] = { name: q.block, rows: [] };
+        blocks.push(blockMap[q.block]);
+      }
+      blockMap[q.block].rows.push(q);
+    });
+    let summaryHtml = '';
+    blocks.forEach(b => {
+      summaryHtml += '<div class="wizard-summary-block">';
+      summaryHtml += '<div class="wizard-summary-eyebrow">' + b.name + '</div>';
+      b.rows.forEach(q => {
+        const ans = wizardState.answers[q.key];
+        const aHtml = ans ? '<span class="a">' + escapeHtml(ans) + '</span>' : '<span class="a empty">não respondida</span>';
+        const qIdx = wizardQuestions.indexOf(q);
+        summaryHtml += '<div class="wizard-summary-row">' +
+          '<span class="q">' + q.q + '</span>' +
+          aHtml +
+          '<button class="edit" type="button" data-edit="' + qIdx + '" aria-label="Editar resposta">editar</button>' +
+        '</div>';
+      });
+      summaryHtml += '</div>';
+    });
+
+    wizardCard.innerHTML =
+      '<div class="wizard-done">' +
+        '<div class="wizard-done-mark" aria-hidden="true">' +
+          '<svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+        '</div>' +
+        '<h1 id="wizard-question-text">Pronto. Seu time já tem o briefing.</h1>' +
+        '<p class="wizard-done-sub">A gente organizou suas respostas num PDF estruturado pra alimentar o Waz, a Maky e o Fin de uma vez só.</p>' +
+        '<div class="wizard-summary">' + summaryHtml + '</div>' +
+        '<div class="wizard-done-actions">' +
+          '<button class="wizard-download" type="button" id="wizard-download">' +
+            '<svg viewBox="0 0 16 16" fill="none"><path d="M8 2v9m0 0l-3-3m3 3l3-3M3 14h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+            'Baixar PDF' +
+          '</button>' +
+          '<button class="wizard-review" type="button" id="wizard-review">Revisar respostas</button>' +
+        '</div>' +
+        '<p class="wizard-done-aux">Agora envie esse PDF na conversa com o <b>Waz</b> em <b>Assistentes</b>. Ele lê e distribui as informações pra Maky e Fin automaticamente.</p>' +
+      '</div>';
+
+    document.getElementById('wizard-download').addEventListener('click', downloadPDF);
+    document.getElementById('wizard-review').addEventListener('click', () => {
+      wizardState.completed = false;
+      wizardState.currentIndex = 0;
+      wizardSave();
+      renderQuestion(0, 'back');
+    });
+    wizardCard.querySelectorAll('button[data-edit]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.dataset.edit, 10);
+        wizardState.completed = false;
+        wizardSave();
+        renderQuestion(idx, 'back');
+      });
+    });
+
+    // Auto-check stage 2 tasks (the wizard does the work)
+    ['t-2-1', 't-2-2'].forEach(id => {
+      const cb = document.getElementById(id);
+      if (cb && !cb.checked) {
+        cb.checked = true;
+        cb.dispatchEvent(new Event('change'));
+      }
+    });
+
+    updateWizardProgress();
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function downloadPDF() {
+    if (!window.jspdf || !window.jspdf.jsPDF) {
+      alert('PDF ainda carregando — tenta de novo em 1 segundo.');
+      return;
+    }
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const margin = 48;
+    const maxWidth = pageWidth - margin * 2;
+    let y = margin;
+
+    const company = wizardState.answers.company_name || 'Seu negócio';
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(20);
+    doc.setTextColor(17, 24, 39);
+    doc.text('Treinamento de agentes', margin, y);
+    y += 26;
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(12);
+    doc.setTextColor(107, 114, 128);
+    doc.text('Squad · perfil do negócio pra alimentar Waz, Maky e Fin', margin, y);
+    y += 18;
+    doc.setFontSize(11);
+    doc.text(company, margin, y);
+    y += 28;
+    doc.setDrawColor(229, 231, 235);
+    doc.line(margin, y, pageWidth - margin, y);
+    y += 24;
+
+    const blocks = [];
+    const blockMap = {};
+    wizardQuestions.forEach(q => {
+      if (!blockMap[q.block]) {
+        blockMap[q.block] = { name: q.block, rows: [] };
+        blocks.push(blockMap[q.block]);
+      }
+      blockMap[q.block].rows.push(q);
+    });
+
+    blocks.forEach((block, bIdx) => {
+      if (y > pageHeight - 120) { doc.addPage(); y = margin; }
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(13);
+      doc.setTextColor(17, 24, 39);
+      doc.text(String(bIdx + 1).padStart(2, '0') + '  ·  ' + block.name.toUpperCase(), margin, y);
+      y += 18;
+      doc.setDrawColor(17, 24, 39);
+      doc.setLineWidth(1.4);
+      doc.line(margin, y - 4, margin + 32, y - 4);
+      doc.setLineWidth(0.5);
+      y += 14;
+
+      block.rows.forEach(q => {
+        const answer = wizardState.answers[q.key] || '(não respondida)';
+        const isEmpty = !wizardState.answers[q.key];
+
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10.5);
+        doc.setTextColor(107, 114, 128);
+        const qLines = doc.splitTextToSize(q.q, maxWidth);
+        if (y + qLines.length * 13 > pageHeight - margin) { doc.addPage(); y = margin; }
+        qLines.forEach(line => { doc.text(line, margin, y); y += 13; });
+        y += 4;
+
+        doc.setFont('helvetica', isEmpty ? 'italic' : 'normal');
+        doc.setFontSize(11);
+        doc.setTextColor(isEmpty ? 156 : 17, isEmpty ? 163 : 24, isEmpty ? 175 : 39);
+        const aLines = doc.splitTextToSize(answer, maxWidth);
+        aLines.forEach(line => {
+          if (y > pageHeight - margin) { doc.addPage(); y = margin; }
+          doc.text(line, margin, y);
+          y += 15;
+        });
+        y += 14;
+      });
+      y += 8;
+    });
+
+    const totalPages = doc.internal.getNumberOfPages();
+    const today = new Date().toLocaleDateString('pt-BR');
+    for (let i = 1; i <= totalPages; i++) {
+      doc.setPage(i);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9);
+      doc.setTextColor(156, 163, 175);
+      doc.text('Gerado em ' + today + '  ·  Squad', margin, pageHeight - 24);
+      doc.text(i + '/' + totalPages, pageWidth - margin, pageHeight - 24, { align: 'right' });
+    }
+
+    const safe = (wizardState.answers.company_name || 'time')
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase().replace(/^-+|-+$/g, '');
+    doc.save('treinamento-' + (safe || 'time') + '.pdf');
+
+    const t23 = document.getElementById('t-2-3');
+    if (t23 && !t23.checked) {
+      t23.checked = true;
+      t23.dispatchEvent(new Event('change'));
+    }
+  }
+
+  if (startWizardBtn) startWizardBtn.addEventListener('click', wizardOpen);
+  if (wizardCloseBtn) wizardCloseBtn.addEventListener('click', wizardClose);
+  if (wizardSkipBtn) wizardSkipBtn.addEventListener('click', skip);
+
+  document.addEventListener('keydown', (e) => {
+    if (!document.body.classList.contains('in-wizard')) return;
+    if (e.key === 'Escape') wizardClose();
   });
 </script>
 
