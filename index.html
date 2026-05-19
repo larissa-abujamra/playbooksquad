@@ -177,10 +177,10 @@
     background: var(--waz);
     border: 1.5px solid var(--waz);
   }
-  .nav-sub[data-nav-stage="2"] .nav-sub-status[data-status="done"] {
+  .nav-sub[data-nav-stage="1"] .nav-sub-status[data-status="done"] {
     background: var(--fin); border-color: var(--fin);
   }
-  .nav-sub[data-nav-stage="3"] .nav-sub-status[data-status="done"] {
+  .nav-sub[data-nav-stage="2"] .nav-sub-status[data-status="done"] {
     background: var(--maky); border-color: var(--maky);
   }
   .nav-sub-name {
@@ -205,8 +205,8 @@
   }
   .nav-sub.is-complete { color: var(--ink-2); }
   .nav-sub.is-complete .nav-sub-count { color: var(--waz); opacity: 1; }
-  .nav-sub[data-nav-stage="2"].is-complete .nav-sub-count { color: var(--fin); }
-  .nav-sub[data-nav-stage="3"].is-complete .nav-sub-count { color: var(--maky); }
+  .nav-sub[data-nav-stage="1"].is-complete .nav-sub-count { color: var(--fin); }
+  .nav-sub[data-nav-stage="2"].is-complete .nav-sub-count { color: var(--maky); }
   .nav-sub.has-progress { color: var(--ink-2); }
   .nav-sub.is-future { opacity: .55; }
   .nav-sub.is-future:hover { opacity: .85; }
@@ -1424,9 +1424,9 @@
     background: var(--stage-color, var(--ink));
     transition: width .5s ease;
   }
-  .tracker-line[data-stage="1"] { --stage-color: var(--waz); }
-  .tracker-line[data-stage="2"] { --stage-color: var(--fin); }
-  .tracker-line[data-stage="3"] { --stage-color: var(--maky); }
+  .tracker-line[data-stage="1"] { --stage-color: var(--fin); }
+  .tracker-line[data-stage="2"] { --stage-color: var(--maky); }
+  .tracker-line[data-stage="3"] { --stage-color: var(--waz); }
 
   .tracker-summary {
     display: flex;
@@ -1649,11 +1649,9 @@
         <p> Provavelmente você já tem.</p>
       </div>
       <div class="ov-needs-grid">
-        <div class="ov-need"><svg viewBox="0 0 18 18" fill="none"><path d="M3.5 9.5l3.5 3.5 7.5-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Celular com WhatsApp (criamos o Business pra você se precisar)</div>
-        <div class="ov-need"><svg viewBox="0 0 18 18" fill="none"><path d="M3.5 9.5l3.5 3.5 7.5-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Conta no Instagram (perfil comercial)</div>
-        <div class="ov-need"><svg viewBox="0 0 18 18" fill="none"><path d="M3.5 9.5l3.5 3.5 7.5-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Acesso ao Facebook/Meta do seu negócio</div>
+        <div class="ov-need"><svg viewBox="0 0 18 18" fill="none"><path d="M3.5 9.5l3.5 3.5 7.5-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Celular com o app Squad instalado</div>
         <div class="ov-need"><svg viewBox="0 0 18 18" fill="none"><path d="M3.5 9.5l3.5 3.5 7.5-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Seus produtos e preços (fotos são opcionais mas ajudam muito)</div>
-        <div class="ov-need"><svg viewBox="0 0 18 18" fill="none"><path d="M3.5 9.5l3.5 3.5 7.5-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Saber suas regras de negócio (horário, prazo de encomenda, área de entrega)</div>
+        <div class="ov-need"><svg viewBox="0 0 18 18" fill="none"><path d="M3.5 9.5l3.5 3.5 7.5-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Saber suas regras de negócio (horário, prazo, entrega)</div>
       </div>
     </section>
 
@@ -1702,22 +1700,22 @@
       <div class="nav-subs">
         <a class="nav-sub" href="#stage-1" data-nav-stage="1">
           <span class="nav-sub-status" data-status="empty"></span>
-          <span class="nav-sub-name">Conecte suas redes</span>
+          <span class="nav-sub-name">Monte seu catálogo</span>
           <span class="nav-sub-count">0/3</span>
         </a>
         <a class="nav-sub" href="#stage-2" data-nav-stage="2">
           <span class="nav-sub-status" data-status="empty"></span>
-          <span class="nav-sub-name">Monte seu catálogo</span>
+          <span class="nav-sub-name">Defina o tom dos agentes</span>
           <span class="nav-sub-count">0/3</span>
         </a>
         <a class="nav-sub" href="#stage-3" data-nav-stage="3">
           <span class="nav-sub-status" data-status="empty"></span>
-          <span class="nav-sub-name">Personalize os agentes</span>
+          <span class="nav-sub-name">Integrações</span>
           <span class="nav-sub-count">0/4</span>
         </a>
         <a class="nav-sub" href="#stage-4" data-nav-stage="4">
           <span class="nav-sub-status" data-status="empty"></span>
-          <span class="nav-sub-name">Ative o co-piloto</span>
+          <span class="nav-sub-name">Piloto automático</span>
           <span class="nav-sub-count">0/3</span>
         </a>
       </div>
@@ -1751,10 +1749,10 @@
       <select id="mobile-nav" aria-label="Ir para seção">
         <optgroup label="Setup">
           <option value="#setup">Setup (visão geral)</option>
-          <option value="#stage-1">① Conecte suas redes</option>
-          <option value="#stage-2">② Monte seu catálogo</option>
-          <option value="#stage-3">③ Personalize os agentes</option>
-          <option value="#stage-4">④ Ative o co-piloto</option>
+          <option value="#stage-1">① Monte seu catálogo</option>
+          <option value="#stage-2">② Defina o tom dos agentes</option>
+          <option value="#stage-3">③ Integrações</option>
+          <option value="#stage-4">④ Piloto automático</option>
         </optgroup>
         <optgroup label="Mais">
           <option value="#semana">Primeiros 7 dias</option>
@@ -1770,20 +1768,8 @@
       <div class="tracker-inner">
         <div class="tracker-steps">
 
-          <div class="tracker-node" data-stage="1" style="--stage-color: var(--waz);">
-            <button class="node-circle" type="button" aria-label="Ir para Etapa 1: Conecte suas redes">
-              <svg class="node-check" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-            <div class="node-label">Redes</div>
-            <div class="node-count">0/3</div>
-          </div>
-
-          <div class="tracker-line" data-stage="1"><div class="tracker-line-fill"></div></div>
-
-          <div class="tracker-node" data-stage="2" style="--stage-color: var(--fin);">
-            <button class="node-circle" type="button" aria-label="Ir para Etapa 2: Monte seu catálogo">
+          <div class="tracker-node" data-stage="1" style="--stage-color: var(--fin);">
+            <button class="node-circle" type="button" aria-label="Ir para Etapa 1: Monte seu catálogo">
               <svg class="node-check" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -1792,27 +1778,39 @@
             <div class="node-count">0/3</div>
           </div>
 
-          <div class="tracker-line" data-stage="2"><div class="tracker-line-fill"></div></div>
+          <div class="tracker-line" data-stage="1"><div class="tracker-line-fill"></div></div>
 
-          <div class="tracker-node" data-stage="3" style="--stage-color: var(--maky);">
-            <button class="node-circle" type="button" aria-label="Ir para Etapa 3: Personalize seus agentes">
+          <div class="tracker-node" data-stage="2" style="--stage-color: var(--maky);">
+            <button class="node-circle" type="button" aria-label="Ir para Etapa 2: Defina o tom dos agentes">
               <svg class="node-check" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
             <div class="node-label">Agentes</div>
+            <div class="node-count">0/3</div>
+          </div>
+
+          <div class="tracker-line" data-stage="2"><div class="tracker-line-fill"></div></div>
+
+          <div class="tracker-node" data-stage="3" style="--stage-color: var(--waz);">
+            <button class="node-circle" type="button" aria-label="Ir para Etapa 3: Integrações">
+              <svg class="node-check" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="node-label">Integrações</div>
             <div class="node-count">0/4</div>
           </div>
 
           <div class="tracker-line" data-stage="3"><div class="tracker-line-fill"></div></div>
 
           <div class="tracker-node" data-stage="4" style="--stage-color: var(--waz);">
-            <button class="node-circle" type="button" aria-label="Ir para Etapa 4: Ative o co-piloto">
+            <button class="node-circle" type="button" aria-label="Ir para Etapa 4: Ative o piloto automático">
               <svg class="node-check" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
-            <div class="node-label">Co-Piloto</div>
+            <div class="node-label">Automático</div>
             <div class="node-count">0/3</div>
           </div>
 
@@ -1841,111 +1839,6 @@
         <div class="stage" id="stage-1">
           <div class="stage-head">
             <span class="stage-num">Etapa 01</span>
-            <span class="stage-title">Conecte suas redes</span>
-            <span class="stage-tags tags">
-              <span class="tag waz"><span class="dot"></span><b>Waz</b></span>
-              <span class="tag maky"><span class="dot"></span><b>Maky</b></span>
-            </span>
-          </div>
-
-          <div class="check-block">
-            <!-- task -->
-            <div class="task">
-              <div class="task-row with-phone">
-                <input type="checkbox" class="checkbox" id="t-1-1" data-task />
-                <div class="task-main">
-                  <label class="task-text" for="t-1-1">Conecte seu Instagram ao squad</label>
-                  <button class="details-toggle" aria-expanded="false" aria-controls="d-1-1"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-                  <div class="details" id="d-1-1">
-                    <div class="details-inner">
-                      <p>Abra o app Squad, toque em <strong>Início</strong> e vá nas configurações (ícone de engrenagem). Em <strong>Redes Sociais</strong>, toque em <strong>Instagram</strong> e siga as instruções. Você vai precisar do login do Facebook conectado ao Instagram do seu negócio.</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="task-phone-wrap">
-                  <div class="phone" aria-hidden="true">
-                    <div class="phone-notch"></div>
-                    <div class="phone-screen">
-                      <div class="phone-status"><span>9:41</span><span class="icons"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M1 11h2v2H1zM4 8h2v5H4zM7 5h2v8H7zM10 2h2v11h-2z"/></svg><svg viewBox="0 0 14 14" fill="none"><rect x="1.5" y="4.5" width="9" height="5" rx="1" stroke="currentColor" stroke-width="1"/><rect x="11" y="6" width="1.5" height="2" rx=".3" fill="currentColor"/></svg></span></div>
-                      <div class="phone-body">
-                        <svg class="placeholder-ic" viewBox="0 0 32 32" fill="none"><rect x="3" y="6" width="26" height="20" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M3 22l7-6 6 4 5-3 8 5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="11" cy="12" r="2" stroke="currentColor" stroke-width="1.6"/></svg>
-                        <div class="ptext">Tela de conexão com Instagram</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="task">
-              <div class="task-row with-phone">
-                <input type="checkbox" class="checkbox" id="t-1-2" data-task />
-                <div class="task-main">
-                  <label class="task-text" for="t-1-2">Conecte seu WhatsApp Business</label>
-                  <button class="details-toggle" aria-expanded="false" aria-controls="d-1-2"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-                  <div class="details" id="d-1-2">
-                    <div class="details-inner">
-                      <p>Se você já tem WhatsApp Business, conecte na  área de configurações — toque em WhatsApp Business e iga o processo.
-
-                        Se você não tem, sem problema — o Squad cria um número novo de WhatsApp Business pra você. É só pedir pro nosso time pelo suporte.
-                        
-                        E se preferir, pode pular esse passo e começar só com o Instagram. Quando estiver pronta pra ativar o WhatsApp, a gente configura junto.</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="task-phone-wrap">
-                  <div class="phone" aria-hidden="true">
-                    <div class="phone-notch"></div>
-                    <div class="phone-screen">
-                      <div class="phone-status"><span>9:41</span><span class="icons"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M1 11h2v2H1zM4 8h2v5H4zM7 5h2v8H7zM10 2h2v11h-2z"/></svg><svg viewBox="0 0 14 14" fill="none"><rect x="1.5" y="4.5" width="9" height="5" rx="1" stroke="currentColor" stroke-width="1"/><rect x="11" y="6" width="1.5" height="2" rx=".3" fill="currentColor"/></svg></span></div>
-                      <div class="phone-body">
-                        <svg class="placeholder-ic" viewBox="0 0 32 32" fill="none"><rect x="3" y="6" width="26" height="20" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M3 22l7-6 6 4 5-3 8 5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="11" cy="12" r="2" stroke="currentColor" stroke-width="1.6"/></svg>
-                        <div class="ptext">Tela de conexão com WhatsApp Business</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="task">
-              <div class="task-row with-phone">
-                <input type="checkbox" class="checkbox" id="t-1-3" data-task />
-                <div class="task-main">
-                  <label class="task-text" for="t-1-3">Confirme que as duas redes estão conectadas</label>
-                  <button class="details-toggle" aria-expanded="false" aria-controls="d-1-3"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-                  <div class="details" id="d-1-3">
-                    <div class="details-inner">
-                      <p>Volte pra tela de configurações e veja se Instagram e WhatsApp aparecem com <strong>✅ verde</strong>. Se algum deu erro, toque nele pra tentar novamente.</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="task-phone-wrap">
-                  <div class="phone" aria-hidden="true">
-                    <div class="phone-notch"></div>
-                    <div class="phone-screen">
-                      <div class="phone-status"><span>9:41</span><span class="icons"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M1 11h2v2H1zM4 8h2v5H4zM7 5h2v8H7zM10 2h2v11h-2z"/></svg><svg viewBox="0 0 14 14" fill="none"><rect x="1.5" y="4.5" width="9" height="5" rx="1" stroke="currentColor" stroke-width="1"/><rect x="11" y="6" width="1.5" height="2" rx=".3" fill="currentColor"/></svg></span></div>
-                      <div class="phone-body">
-                        <svg class="placeholder-ic" viewBox="0 0 32 32" fill="none"><rect x="3" y="6" width="26" height="20" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M3 22l7-6 6 4 5-3 8 5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="11" cy="12" r="2" stroke="currentColor" stroke-width="1.6"/></svg>
-                        <div class="ptext">Tela de confirmação — redes conectadas</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="callout waz">
-            <span class="ico" aria-hidden="true">💡</span>
-            <span>Se você ainda usa WhatsApp normal, baixe o <strong>WhatsApp Business</strong> na loja do celular. É grátis e você migra sem perder conversas.</span>
-          </div>
-        </div>
-
-        <!-- ETAPA 2 -->
-        <div class="stage" id="stage-2">
-          <div class="stage-head">
-            <span class="stage-num">Etapa 02</span>
             <span class="stage-title">Monte seu catálogo</span>
             <span class="stage-tags tags">
               <span class="tag waz"><span class="dot"></span><b>Waz</b></span>
@@ -1956,13 +1849,14 @@
           <div class="check-block">
             <div class="task">
               <div class="task-row with-phone">
-                <input type="checkbox" class="checkbox" id="t-2-1" data-task />
+                <input type="checkbox" class="checkbox" id="t-1-1" data-task />
                 <div class="task-main">
-                  <label class="task-text" for="t-2-1">Cadastre seu primeiro produto</label>
-                  <button class="details-toggle" aria-expanded="false" aria-controls="d-2-1"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-                  <div class="details" id="d-2-1">
+                  <label class="task-text" for="t-1-1">Cadastre seu primeiro produto</label>
+                  <button class="details-toggle" aria-expanded="false" aria-controls="d-1-1"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <div class="details" id="d-1-1">
                     <div class="details-inner">
-                      <p>Na tela inicial do Squad, toque em <strong>Produtos e Serviços</strong>. Toque no botão <strong>+</strong> pra adicionar. Preencha o nome, preço e adicione uma foto. Exemplo: <em>Bolo de chocolate — R$ 85,00</em>.</p>
+                      <p>Abra o app Squad e toque em <strong>Produtos e Serviços</strong>. Toque no <strong>+</strong> pra adicionar seu primeiro item. Preencha o nome e o preço — foto é opcional mas ajuda muito suas clientes a escolherem.</p>
+                      <p style="margin-top: 8px;"><em>Exemplo: Bolo de chocolate — R$ 85,00</em></p>
                     </div>
                   </div>
                 </div>
@@ -1982,11 +1876,11 @@
 
             <div class="task">
               <div class="task-row with-phone">
-                <input type="checkbox" class="checkbox" id="t-2-2" data-task />
+                <input type="checkbox" class="checkbox" id="t-1-2" data-task />
                 <div class="task-main">
-                  <label class="task-text" for="t-2-2">Adicione pelo menos 5 produtos</label>
-                  <button class="details-toggle" aria-expanded="false" aria-controls="d-2-2"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-                  <div class="details" id="d-2-2">
+                  <label class="task-text" for="t-1-2">Adicione pelo menos 5 produtos</label>
+                  <button class="details-toggle" aria-expanded="false" aria-controls="d-1-2"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <div class="details" id="d-1-2">
                     <div class="details-inner">
                       <p>Seus 5 produtos mais vendidos já são suficientes pra começar. Você pode adicionar mais depois, sem pressa.</p>
                       <p style="margin-top: 10px; font-size: 14px; color: var(--ink-3);">Exemplos pra confeitaria:</p>
@@ -2016,13 +1910,13 @@
 
             <div class="task">
               <div class="task-row">
-                <input type="checkbox" class="checkbox" id="t-2-3" data-task />
+                <input type="checkbox" class="checkbox" id="t-1-3" data-task />
                 <div class="task-main">
-                  <label class="task-text" for="t-2-3">Confira se todos os preços estão certos</label>
-                  <button class="details-toggle" aria-expanded="false" aria-controls="d-2-3"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-                  <div class="details" id="d-2-3">
+                  <label class="task-text" for="t-1-3">Confira se os preços estão certos</label>
+                  <button class="details-toggle" aria-expanded="false" aria-controls="d-1-3"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <div class="details" id="d-1-3">
                     <div class="details-inner">
-                      <p>Volte na lista em <strong>Produtos e Serviços</strong> e revise os preços. O Waz vai usar esses valores pra responder clientes, e o Fin pra gerar links de pagamento — então é importante que estejam atualizados.</p>
+                      <p>Volte na lista em <strong>Produtos e Serviços</strong> e revise. O Waz vai usar esses valores pra responder clientes, e o Fin pra gerar links de pagamento — então é importante que estejam atualizados.</p>
                     </div>
                   </div>
                 </div>
@@ -2036,11 +1930,11 @@
           </div>
         </div>
 
-        <!-- ETAPA 3 -->
-        <div class="stage" id="stage-3">
+        <!-- ETAPA 2 -->
+        <div class="stage" id="stage-2">
           <div class="stage-head">
-            <span class="stage-num">Etapa 03</span>
-            <span class="stage-title">Treine seus agentes</span>
+            <span class="stage-num">Etapa 02</span>
+            <span class="stage-title">Defina o tom dos agentes</span>
             <span class="stage-tags tags">
               <span class="tag waz"><span class="dot"></span><b>Waz</b></span>
               <span class="tag maky"><span class="dot"></span><b>Maky</b></span>
@@ -2050,33 +1944,22 @@
 
           <div class="check-block">
             <div class="task">
-              <div class="task-row with-phone">
-                <input type="checkbox" class="checkbox" id="t-3-1" data-task />
+              <div class="task-row">
+                <input type="checkbox" class="checkbox" id="t-2-1" data-task />
                 <div class="task-main">
-                  <label class="task-text" for="t-3-1">Converse com o Waz sobre seu negócio</label>
-                  <button class="details-toggle" aria-expanded="false" aria-controls="d-3-1"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-                  <div class="details" id="d-3-1">
+                  <label class="task-text" for="t-2-1">Responda as perguntas sobre seu negócio</label>
+                  <button class="details-toggle" aria-expanded="false" aria-controls="d-2-1"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <div class="details" id="d-2-1">
                     <div class="details-inner">
-                      <p>Toque em <strong>Assistentes</strong> na barra inferior e abra a conversa com o <strong>Waz</strong>. Conte pra ele sobre sua confeitaria — pode mandar <strong>texto, áudio ou até PDFs</strong>. Quanto mais você contar, melhor ele vai atender suas clientes.</p>
-                      <p style="margin-top: 8px;">Comece contando coisas como:</p>
+                      <p>Vamos te fazer algumas perguntas sobre sua confeitaria pra que os agentes entendam como você trabalha. Coisas como:</p>
                       <ul class="examples">
-                        <li>O que sua confeitaria faz e o que é mais vendido</li>
-                        <li>Horário de funcionamento</li>
-                        <li>Área de entrega</li>
-                        <li>Prazo pra encomendas (ex: "precisa pedir com 48h de antecedência")</li>
+                        <li>O que você vende e o que é mais pedido?</li>
+                        <li>Qual seu horário de funcionamento?</li>
+                        <li>Você faz entrega? Pra quais regiões?</li>
+                        <li>Qual o prazo mínimo pra encomendas?</li>
+                        <li>Tem algum produto que você não faz? (ex: sem glúten, sem lactose)</li>
                       </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="task-phone-wrap">
-                  <div class="phone" aria-hidden="true">
-                    <div class="phone-notch"></div>
-                    <div class="phone-screen">
-                      <div class="phone-status"><span>9:41</span><span class="icons"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M1 11h2v2H1zM4 8h2v5H4zM7 5h2v8H7zM10 2h2v11h-2z"/></svg><svg viewBox="0 0 14 14" fill="none"><rect x="1.5" y="4.5" width="9" height="5" rx="1" stroke="currentColor" stroke-width="1"/><rect x="11" y="6" width="1.5" height="2" rx=".3" fill="currentColor"/></svg></span></div>
-                      <div class="phone-body">
-                        <svg class="placeholder-ic" viewBox="0 0 32 32" fill="none"><rect x="3" y="6" width="26" height="20" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M3 22l7-6 6 4 5-3 8 5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="11" cy="12" r="2" stroke="currentColor" stroke-width="1.6"/></svg>
-                        <div class="ptext">Conversa com o Waz — treinamento inicial</div>
-                      </div>
+                      <p style="margin-top: 8px;">Suas respostas vão virar um documento com o perfil completo do seu negócio.</p>
                     </div>
                   </div>
                 </div>
@@ -2085,20 +1968,20 @@
 
             <div class="task">
               <div class="task-row">
-                <input type="checkbox" class="checkbox" id="t-3-2" data-task />
+                <input type="checkbox" class="checkbox" id="t-2-2" data-task />
                 <div class="task-main">
-                  <label class="task-text" for="t-3-2">Ensine o tom de voz e as regras</label>
-                  <button class="details-toggle" aria-expanded="false" aria-controls="d-3-2"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-                  <div class="details" id="d-3-2">
+                  <label class="task-text" for="t-2-2">Defina como você quer que o Waz atenda</label>
+                  <button class="details-toggle" aria-expanded="false" aria-controls="d-2-2"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <div class="details" id="d-2-2">
                     <div class="details-inner">
-                      <p>Ainda na conversa com o Waz, diga como você quer que ele fale com suas clientes. Pode mandar um áudio explicando ou escrever. Exemplos:</p>
+                      <p>Agora, a parte divertida — diga como você quer que o Waz converse com suas clientes. Pense em como <strong>você</strong> responderia e descreva:</p>
                       <ul class="examples">
-                        <li>"Quero que você responda de forma carinhosa, usando emojis de coração e bolo 🎂💕"</li>
+                        <li>"Quero que seja carinhoso e próximo, use emojis 🎂💕"</li>
                         <li>"Chame a cliente pelo nome sempre"</li>
-                        <li>"Não fazemos bolo sem glúten, avise com educação"</li>
-                        <li>"Se perguntarem sobre entrega, diga que só entregamos na Zona Sul de SP"</li>
+                        <li>"Seja educada mas objetiva, sem enrolação"</li>
+                        <li>"Use 'a gente' ao invés de 'nós'"</li>
                       </ul>
-                      <p style="margin-top: 8px;">💡 <strong>Dica:</strong> pense nas 10 perguntas que suas clientes mais fazem no WhatsApp. Se você mandar essas respostas pro Waz, ele já vai saber responder sozinho.</p>
+                      <p style="margin-top: 8px;">💡 <strong>Dica:</strong> pense nas 10 perguntas que suas clientes mais fazem no WhatsApp. Se você incluir essas respostas, o Waz já vai saber responder sozinho.</p>
                     </div>
                   </div>
                 </div>
@@ -2107,20 +1990,14 @@
 
             <div class="task">
               <div class="task-row with-phone">
-                <input type="checkbox" class="checkbox" id="t-3-3" data-task />
+                <input type="checkbox" class="checkbox" id="t-2-3" data-task />
                 <div class="task-main">
-                  <label class="task-text" for="t-3-3">Diga ao Waz como a Maky deve postar</label>
-                  <button class="details-toggle" aria-expanded="false" aria-controls="d-3-3"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-                  <div class="details" id="d-3-3">
+                  <label class="task-text" for="t-2-3">Envie o documento pro Waz</label>
+                  <button class="details-toggle" aria-expanded="false" aria-controls="d-2-3"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <div class="details" id="d-2-3">
                     <div class="details-inner">
-                      <p>O Waz repassa informações pra Maky automaticamente, mas você pode mandar instruções específicas sobre marketing. Na mesma conversa, diga coisas como:</p>
-                      <ul class="examples">
-                        <li>"Quero postar 3 vezes por semana no Instagram"</li>
-                        <li>"Gosto de fotos com fundo rosa e iluminação quente"</li>
-                        <li>"Sempre mencionar que é artesanal e feito com amor"</li>
-                        <li>"Não usar a palavra 'barato', prefiro 'acessível'"</li>
-                      </ul>
-                      <p style="margin-top: 8px;">Você também pode mandar <strong>fotos dos seus doces</strong> pra Maky usar nos posts — quanto mais fotos boas, melhor o conteúdo que ela cria.</p>
+                      <p>Com as respostas, será gerado um <strong>PDF com o perfil do seu negócio</strong>. Abra a conversa com o <strong>Waz</strong> na aba <strong>Assistentes</strong> e envie esse documento. O Waz lê tudo e já aprende sobre sua confeitaria.</p>
+                      <p style="margin-top: 8px;">Você também pode complementar mandando <strong>áudios, textos ou mais PDFs</strong> a qualquer momento. Ex: "Waz, a partir de hoje a gente faz entrega na Zona Norte também."</p>
                     </div>
                   </div>
                 </div>
@@ -2131,7 +2008,50 @@
                       <div class="phone-status"><span>9:41</span><span class="icons"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M1 11h2v2H1zM4 8h2v5H4zM7 5h2v8H7zM10 2h2v11h-2z"/></svg><svg viewBox="0 0 14 14" fill="none"><rect x="1.5" y="4.5" width="9" height="5" rx="1" stroke="currentColor" stroke-width="1"/><rect x="11" y="6" width="1.5" height="2" rx=".3" fill="currentColor"/></svg></span></div>
                       <div class="phone-body">
                         <svg class="placeholder-ic" viewBox="0 0 32 32" fill="none"><rect x="3" y="6" width="26" height="20" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M3 22l7-6 6 4 5-3 8 5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="11" cy="12" r="2" stroke="currentColor" stroke-width="1.6"/></svg>
-                        <div class="ptext">Conversa com o Waz — instruções pra Maky</div>
+                        <div class="ptext">Conversa com o Waz — envio do documento de perfil</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout maky">
+            <span class="ico" aria-hidden="true">💡</span>
+            <span>O Waz distribui as informações pra Maky e Fin automaticamente. Você treina um, e os três aprendem.</span>
+          </div>
+        </div>
+
+        <!-- ETAPA 3 -->
+        <div class="stage" id="stage-3">
+          <div class="stage-head">
+            <span class="stage-num">Etapa 03</span>
+            <span class="stage-title">Integrações</span>
+          </div>
+
+          <div class="check-block">
+            <div class="task">
+              <div class="task-row with-phone">
+                <input type="checkbox" class="checkbox" id="t-3-1" data-task />
+                <div class="task-main">
+                  <label class="task-text" for="t-3-1">Conecte seu Instagram</label>
+                  <button class="details-toggle" aria-expanded="false" aria-controls="d-3-1"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <div class="details" id="d-3-1">
+                    <div class="details-inner">
+                      <p>Abra o app Squad, vá nas configurações (ícone de engrenagem) e toque em <strong>Redes Sociais &gt; Instagram</strong>. Siga as instruções na tela pra conectar.</p>
+                      <p style="margin-top: 8px;">Você vai precisar do <strong>login do Facebook</strong> conectado ao Instagram do seu negócio. Se tiver dificuldade, não se preocupe — a gente resolve isso na call de integração.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="task-phone-wrap">
+                  <div class="phone" aria-hidden="true">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                      <div class="phone-status"><span>9:41</span><span class="icons"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M1 11h2v2H1zM4 8h2v5H4zM7 5h2v8H7zM10 2h2v11h-2z"/></svg><svg viewBox="0 0 14 14" fill="none"><rect x="1.5" y="4.5" width="9" height="5" rx="1" stroke="currentColor" stroke-width="1"/><rect x="11" y="6" width="1.5" height="2" rx=".3" fill="currentColor"/></svg></span></div>
+                      <div class="phone-body">
+                        <svg class="placeholder-ic" viewBox="0 0 32 32" fill="none"><rect x="3" y="6" width="26" height="20" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M3 22l7-6 6 4 5-3 8 5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="11" cy="12" r="2" stroke="currentColor" stroke-width="1.6"/></svg>
+                        <div class="ptext">Tela de conexão com Instagram</div>
                       </div>
                     </div>
                   </div>
@@ -2141,13 +2061,13 @@
 
             <div class="task">
               <div class="task-row with-phone">
-                <input type="checkbox" class="checkbox" id="t-3-4" data-task />
+                <input type="checkbox" class="checkbox" id="t-3-2" data-task />
                 <div class="task-main">
-                  <label class="task-text" for="t-3-4">Configure seus dados de pagamento</label>
-                  <button class="details-toggle" aria-expanded="false" aria-controls="d-3-4"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-                  <div class="details" id="d-3-4">
+                  <label class="task-text" for="t-3-2">Configure seus dados de pagamento</label>
+                  <button class="details-toggle" aria-expanded="false" aria-controls="d-3-2"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <div class="details" id="d-3-2">
                     <div class="details-inner">
-                      <p>Esta parte é feita no app, não na conversa. Na tela inicial, toque em <strong>Link de Pagamento</strong> e configure sua <strong>chave Pix</strong> e/ou dados pra receber por cartão. Assim o Fin consegue gerar links de pagamento e mandá-los direto pras suas clientes no WhatsApp.</p>
+                      <p>Na tela inicial, toque em <strong>Link de Pagamento</strong> e configure sua <strong>chave Pix</strong> e/ou dados pra receber por cartão. Assim o Fin consegue gerar links de pagamento e mandá-los direto pras suas clientes.</p>
                     </div>
                   </div>
                 </div>
@@ -2165,11 +2085,54 @@
                 </div>
               </div>
             </div>
+
+            <div class="task">
+              <div class="task-row">
+                <input type="checkbox" class="checkbox" id="t-3-3" data-task />
+                <div class="task-main">
+                  <label class="task-text" for="t-3-3">Agende sua call de integração do WhatsApp</label>
+                  <button class="details-toggle" aria-expanded="false" aria-controls="d-3-3"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <div class="details" id="d-3-3">
+                    <div class="details-inner">
+                      <p>A conexão do WhatsApp Business precisa ser feita junto com nosso time — é rápido, mas tem detalhes técnicos que a gente resolve pra você. <strong>O Squad cria um número novo de WhatsApp Business</strong> pro seu negócio.</p>
+                      <p style="margin-top: 8px;">Toque no botão abaixo pra agendar uma call de 20 minutos com o time:</p>
+                      <p style="margin-top: 12px;">
+                        <a href="https://wa.me/SEUNUMERO" target="_blank" rel="noopener" class="btn-link" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: var(--ink); color: #fff; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 600;">
+                          📅 Agendar call de integração
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="task">
+              <div class="task-row">
+                <input type="checkbox" class="checkbox" id="t-3-4" data-task />
+                <div class="task-main">
+                  <label class="task-text" for="t-3-4">Checklist pra call de integração</label>
+                  <button class="details-toggle" aria-expanded="false" aria-controls="d-3-4"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <div class="details" id="d-3-4">
+                    <div class="details-inner">
+                      <p>Tenha isso em mãos na hora da call:</p>
+                      <ul class="examples">
+                        <li>✅ Acesso ao Facebook/Meta do seu negócio (email e senha)</li>
+                        <li>✅ Conta no Instagram (perfil comercial) conectada ao Facebook</li>
+                        <li>✅ Documento com foto (RG ou CNH) — pro processo de verificação do número</li>
+                        <li>✅ Seu catálogo e tom de voz já configurados (Etapas 1 e 2)</li>
+                      </ul>
+                      <p style="margin-top: 8px; color: var(--ink-3); font-size: 14px;">A call dura cerca de 20 minutos. No final, seu WhatsApp Business já vai estar conectado e o Waz pronto pra atender.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="callout maky">
+          <div class="callout fin">
             <span class="ico" aria-hidden="true">💡</span>
-            <span>Você pode voltar e ensinar coisas novas pro Waz a qualquer momento. Mudou o cardápio? Tem uma regra nova? É só mandar uma mensagem pra ele — por <strong>texto, áudio ou PDF</strong>.</span>
+            <span>A integração do WhatsApp é feita junto com nosso time — <strong>você não precisa fazer sozinha</strong>. Tudo que precisa é agendar a call e ter os itens do checklist prontos.</span>
           </div>
         </div>
 
@@ -2177,7 +2140,7 @@
         <div class="stage" id="stage-4">
           <div class="stage-head">
             <span class="stage-num">Etapa 04</span>
-            <span class="stage-title">Ative o modo Co-Piloto</span>
+            <span class="stage-title">Ative o piloto automático</span>
             <span class="stage-tags tags">
               <span class="tag waz"><span class="dot"></span><b>Waz</b></span>
             </span>
@@ -2188,12 +2151,12 @@
               <div class="task-row with-phone">
                 <input type="checkbox" class="checkbox" id="t-4-1" data-task />
                 <div class="task-main">
-                  <label class="task-text" for="t-4-1">Ative o modo Co-Piloto do Waz</label>
+                  <label class="task-text" for="t-4-1">Comece no modo Co-Piloto</label>
                   <button class="details-toggle" aria-expanded="false" aria-controls="d-4-1"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
                   <div class="details" id="d-4-1">
                     <div class="details-inner">
-                      <p>No começo, o Waz não manda mensagens sozinho. Ele funciona no modo <strong>Co-Piloto</strong>: quando uma cliente manda mensagem, o Waz prepara <strong>3 sugestões de resposta</strong> e te notifica. Você escolhe a melhor, edita se quiser, e só então a resposta é enviada.</p>
-                      <p style="margin-top: 8px;">Pra ativar, vá em <strong>Assistentes</strong>, toque no Waz e confirme que o modo <strong>Co-Piloto</strong> está ligado (é o padrão).</p>
+                      <p>Depois da call de integração, o Waz começa no modo <strong>Co-Piloto</strong>: quando uma cliente manda mensagem, ele prepara <strong>3 sugestões de resposta</strong> e te notifica. Você escolhe a melhor, edita se quiser, e só então a resposta é enviada.</p>
+                      <p style="margin-top: 8px;">Esse modo já vem ativo por padrão — é só acompanhar as notificações.</p>
                     </div>
                   </div>
                 </div>
@@ -2216,11 +2179,11 @@
               <div class="task-row">
                 <input type="checkbox" class="checkbox" id="t-4-2" data-task />
                 <div class="task-main">
-                  <label class="task-text" for="t-4-2">Responda às primeiras 5 mensagens pelo Co-Piloto</label>
+                  <label class="task-text" for="t-4-2">Acompanhe as primeiras conversas</label>
                   <button class="details-toggle" aria-expanded="false" aria-controls="d-4-2"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
                   <div class="details" id="d-4-2">
                     <div class="details-inner">
-                      <p>Acompanhe as primeiras interações. O Waz tá sugerindo respostas que parecem com você? As informações estão certas? Se algo estiver estranho, é só <strong>mandar uma mensagem pro Waz corrigindo</strong> — ele aprende na hora.</p>
+                      <p>Nos primeiros dias, fique de olho nas sugestões do Waz. Ele tá respondendo com o tom certo? As informações estão corretas? Se algo estiver estranho, é só <strong>mandar uma mensagem pro Waz corrigindo</strong> na aba Assistentes — ele aprende na hora.</p>
                     </div>
                   </div>
                 </div>
@@ -2231,11 +2194,11 @@
               <div class="task-row with-phone">
                 <input type="checkbox" class="checkbox" id="t-4-3" data-task />
                 <div class="task-main">
-                  <label class="task-text" for="t-4-3">Quando estiver confortável, ative o Piloto Automático</label>
+                  <label class="task-text" for="t-4-3">Ative o Piloto Automático quando se sentir confortável</label>
                   <button class="details-toggle" aria-expanded="false" aria-controls="d-4-3"><span>Ver detalhes</span><span class="chev"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
                   <div class="details" id="d-4-3">
                     <div class="details-inner">
-                      <p>Quando sentir confiança nas respostas do Waz, vá em <strong>Assistentes</strong>, toque no Waz e mude pra modo <strong>Piloto Automático</strong>. A partir daí, ele responde sozinho e só te notifica quando não sabe algo ou quando a cliente pede pra falar com você.</p>
+                      <p>Quando sentir confiança, vá em <strong>Assistentes</strong>, toque no Waz e mude pra <strong>Piloto Automático</strong>. A partir daí, ele responde sozinho e só te notifica quando não sabe algo ou quando a cliente pede pra falar com você.</p>
                       <p style="margin-top: 8px;">Você pode voltar pro Co-Piloto a qualquer momento.</p>
                     </div>
                   </div>
@@ -2258,7 +2221,7 @@
 
           <div class="callout waz">
             <span class="ico" aria-hidden="true">💡</span>
-            <span>A maioria das confeitarias ativa o piloto automático <strong>entre 3 e 7 dias</strong>. Não precisa ter pressa — vá no seu ritmo. E se o Waz errar, é só corrigir na conversa.</span>
+            <span>A maioria das confeitarias ativa o piloto automático <strong>entre 3 e 7 dias</strong>. Não precisa ter pressa — e se o Waz errar, é só corrigir na conversa.</span>
           </div>
         </div>
       </section>
@@ -2365,7 +2328,7 @@
   });
 
   // ============ Setup progress (localStorage) ============
-  const STORAGE_KEY = 'squad-playbook-confeitarias-v2';
+  const STORAGE_KEY = 'squad-playbook-confeitarias-v3';
   const taskInputs = document.querySelectorAll('[data-task]');
   const totalEl = document.getElementById('prog-total');
   const doneEl = document.getElementById('prog-done');
