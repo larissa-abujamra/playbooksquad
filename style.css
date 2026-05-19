@@ -578,9 +578,7 @@
     background: var(--bg-2);
     font-size: 14px;
   }
-  .details .examples li::before {
-    content: "—"; color: var(--ink-3); margin-right: 8px;
-  }
+  
   .details ol.flow {
     margin: 12px 0 0; padding-left: 22px;
     display: grid; gap: 4px; color: var(--ink-2); font-size: 14.5px;
