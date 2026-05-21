@@ -85,7 +85,7 @@
     const stages = [
       { id: 1, tasks: ['t-1-1','t-1-2','t-1-3'] },
       { id: 2, tasks: ['t-2-3'] },
-      { id: 3, tasks: ['t-3-1','t-3-2','t-3-3','t-3-4'] },
+      { id: 3, tasks: ['t-3-1','t-3-2','t-3-4'] },
       { id: 4, tasks: ['t-4-1','t-4-2','t-4-3'] },
     ];
     const totalTasks = stages.reduce((s, st) => s + st.tasks.length, 0);
@@ -227,9 +227,10 @@
     const navStages = [
       { id: 1, tasks: ['t-1-1','t-1-2','t-1-3'] },
       { id: 2, tasks: ['t-2-3'] },
-      { id: 3, tasks: ['t-3-1','t-3-2','t-3-3','t-3-4'] },
+      { id: 3, tasks: ['t-3-1','t-3-2','t-3-4'] },
       { id: 4, tasks: ['t-4-1','t-4-2','t-4-3'] },
     ];
+    const navTotalTasks = navStages.reduce((s, st) => s + st.tasks.length, 0);
     const navTotalEl = document.getElementById('nav-setup-total');
 
     function countDone(stage) {
@@ -281,10 +282,10 @@
         }
       });
 
-      if (navTotalEl) navTotalEl.textContent = globalDone + '/11';
+      if (navTotalEl) navTotalEl.textContent = globalDone + '/' + navTotalTasks;
 
       const navGroup = document.getElementById('nav-setup-group');
-      if (navGroup) navGroup.classList.toggle('all-complete', globalDone === 13);
+      if (navGroup) navGroup.classList.toggle('all-complete', globalDone === navTotalTasks);
     }
 
     taskInputs.forEach(t => t.addEventListener('change', updateSidebarNav));
