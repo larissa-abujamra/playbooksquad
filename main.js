@@ -1044,3 +1044,96 @@
     if (!document.body.classList.contains('in-wizard')) return;
     if (e.key === 'Escape') wizardClose();
   });
+
+  /* ---- Testimonial Card Expand/Collapse ---- */
+  const tcardOverlay = document.getElementById('tcard-overlay');
+  const tcardClose = document.getElementById('tcard-close');
+
+  if (tcardOverlay) {
+    const testimonialData = [
+      {
+        name: 'Brigadayros',
+        role: 'Confeitaria artesanal · São Paulo',
+        quote: '"Antes do Squad, eu passava 4 horas por dia só respondendo WhatsApp. Agora o Waz cuida de tudo e eu consigo focar na produção. As vendas aumentaram porque nenhuma cliente fica sem resposta, mesmo de madrugada." (placeholder)',
+        agents: ['Maky', 'Waz', 'Fin'],
+        agentColors: ['#E91E8C', '#2DB67D', '#2563EB'],
+        result: '-4h/dia no WhatsApp (placeholder)',
+      },
+      {
+        name: 'Doguh Confeitaria',
+        role: 'Doces finos & bolos · São Paulo',
+        quote: '"A Maky mudou meu Instagram completamente. Eu não tinha tempo pra criar conteúdo e postava uma vez por semana, quando lembrava. Agora tenho posts profissionais saindo toda semana e meus seguidores estão virando clientes." (placeholder)',
+        agents: ['Maky', 'Waz'],
+        agentColors: ['#E91E8C', '#2DB67D'],
+        result: '+3x posts por semana (placeholder)',
+      },
+      {
+        name: 'Cookies da Nola',
+        role: 'Cookies artesanais · São Paulo',
+        quote: '"O Fin me salvou. Eu não sabia quanto tava lucrando de verdade porque não controlava nada. Agora tenho fluxo de caixa atualizado, sei exatamente quem pagou e quem não pagou, e os links de Pix vão direto pelo WhatsApp." (placeholder)',
+        agents: ['Waz', 'Fin'],
+        agentColors: ['#2DB67D', '#2563EB'],
+        result: '100% controle financeiro (placeholder)',
+      }
+    ];
+
+    let scrollYBeforeOpen = 0;
+
+    function openTestimonial(index) {
+      const data = testimonialData[index];
+      if (!data) return;
+
+      document.getElementById('tcard-o-role').textContent = data.role;
+      document.getElementById('tcard-o-name').textContent = data.name.toLowerCase() + '.';
+      document.getElementById('tcard-o-text').textContent = data.quote;
+
+      const agentsEl = document.getElementById('tcard-o-agents');
+      if (agentsEl) {
+        agentsEl.innerHTML = data.agents.map((name, i) =>
+          '<span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:' + data.agentColors[i] + ';margin-right:4px;vertical-align:middle;"></span>' + name + '</span>'
+        ).join('');
+      }
+
+      const resultEl = document.getElementById('tcard-o-result');
+      if (resultEl) resultEl.textContent = data.result;
+
+      scrollYBeforeOpen = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = '-' + scrollYBeforeOpen + 'px';
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+
+      tcardOverlay.classList.add('is-open');
+      tcardOverlay.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeTestimonial() {
+      tcardOverlay.classList.remove('is-open');
+      tcardOverlay.setAttribute('aria-hidden', 'true');
+
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
+      window.scrollTo({ top: scrollYBeforeOpen, behavior: 'instant' });
+    }
+
+    document.querySelectorAll('.tcard').forEach(card => {
+      card.addEventListener('click', () => {
+        const index = parseInt(card.dataset.index, 10);
+        openTestimonial(index);
+      });
+    });
+
+    if (tcardClose) {
+      tcardClose.addEventListener('click', closeTestimonial);
+    }
+
+    tcardOverlay.querySelector('.tcard-overlay-backdrop').addEventListener('click', closeTestimonial);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && tcardOverlay.classList.contains('is-open')) {
+        closeTestimonial();
+      }
+    });
+  }
